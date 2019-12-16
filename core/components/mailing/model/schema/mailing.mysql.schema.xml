@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="mailing_" version="1.0">
+    <object class="mailingTemplate" table="templates" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="user_group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+<!--        <field key="fields" dbtype="text" phptype="json" null="true"/>-->
+<!--        <field key="xtypes" dbtype="text" phptype="json" null="true"/>-->
+<!--        <field key="menuindex" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>-->
+<!--        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>-->
+        <!--Indexes-->
+        <index alias="user_group_id" name="user_group_id" primary="false" unique="false" type="BTREE">
+            <column key="user_group_id" length="" collation="A" null="false"/>
+        </index>
+    </object>
+
+    <object class="mailingQueue" table="queues" extends="xPDOSimpleObject">
+        <field key="email" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="template_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="is_processed" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <!--Indexes-->
+        <index alias="template_id" name="template_id" primary="false" unique="false" type="BTREE">
+            <column key="template_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="is_processed" name="is_processed" primary="false" unique="false" type="BTREE">
+            <column key="is_processed" length="" collation="A" null="false"/>
+        </index>
+        <!--Links-->
+        <aggregate alias="ProductGroup" class="ms2bundleProductGroup" local="product_group_id" foreign="id" cardinality="one" owner="foreign"/>
+        <composite alias="Ingredients" class="ms2bundleIngredient" local="id" foreign="ingredient_group_id" cardinality="many" owner="local"/>
+    </object>
+</model>
