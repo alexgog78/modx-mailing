@@ -20,7 +20,7 @@ class mailingMgrTemplatesManagerController extends mailingManagerController
     public function loadCustomCssJs()
     {
         parent::loadCustomCssJs();
-        //$this->loadProductTabsCssJs();
-        //$this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/producttab/producttabs.panel.js');
+        $this->loadTemplatesCssJs();
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/template/panel.js');
     }
 }

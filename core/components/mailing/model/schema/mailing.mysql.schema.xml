@@ -2,15 +2,18 @@
 <model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="mailing_" version="1.0">
     <object class="mailingTemplate" table="templates" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="description" dbtype="text" phptype="string" null="true"/>
         <field key="user_group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
-<!--        <field key="fields" dbtype="text" phptype="json" null="true"/>-->
-<!--        <field key="xtypes" dbtype="text" phptype="json" null="true"/>-->
-<!--        <field key="menuindex" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>-->
-<!--        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>-->
+        <field key="subject" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="template" dbtype="text" phptype="string" null="true"/>
         <!--Indexes-->
         <index alias="user_group_id" name="user_group_id" primary="false" unique="false" type="BTREE">
             <column key="user_group_id" length="" collation="A" null="false"/>
         </index>
+        <!--Links-->
+        <aggregate alias="UserGroup" class="modUserGroup" local="user_group_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="UserGroupMembers" class="modUserGroupMember" local="user_group_id" foreign="user_group" cardinality="many" owner="local"/>
+        <composite alias="Queues" class="mailingQueue" local="id" foreign="template_id" cardinality="many" owner="local"/>
     </object>
 
     <object class="mailingQueue" table="queues" extends="xPDOSimpleObject">
@@ -25,7 +28,6 @@
             <column key="is_processed" length="" collation="A" null="false"/>
         </index>
         <!--Links-->
-        <aggregate alias="ProductGroup" class="ms2bundleProductGroup" local="product_group_id" foreign="id" cardinality="one" owner="foreign"/>
-        <composite alias="Ingredients" class="ms2bundleIngredient" local="id" foreign="ingredient_group_id" cardinality="many" owner="local"/>
+        <aggregate alias="Template" class="mailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
 </model>

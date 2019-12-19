@@ -64,4 +64,13 @@ $xpdo_meta_map['mailingQueue'] = [
             ],
         ],
     ],
+    'aggregates' => [
+        'Template' => [
+            'class' => 'mailingTemplate',
+            'local' => 'template_id',
+            'foreign' => 'id',
+            'cardinality' => 'one',
+            'owner' => 'foreign',
+        ],
+    ],
 ];
