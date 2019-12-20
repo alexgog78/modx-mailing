@@ -1,13 +1,9 @@
 'use strict';
 
-var namespace = Mailing;
-var grid = namespace.grid.queue;
-var xtype = 'mailing-grid-queue';
-
-grid = function (config) {
+Mailing.grid.queue = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = xtype;
+        config.id = 'mailing-grid-queue';
     }
     Ext.applyIf(config, {
         url: Mailing.config.connectorUrl,
@@ -29,9 +25,9 @@ grid = function (config) {
             }
         }
     });
-    grid.superclass.constructor.call(this, config);
+    Mailing.grid.queue.superclass.constructor.call(this, config);
 };
-Ext.extend(grid, namespace.grid.abstract, {
+Ext.extend(Mailing.grid.queue, Mailing.grid.abstract, {
     getMenu: function () {
         return [{
             text: _('delete'),
@@ -47,4 +43,4 @@ Ext.extend(grid, namespace.grid.abstract, {
         ];
     }
 });
-Ext.reg(xtype, grid);
+Ext.reg('mailing-grid-queue', Mailing.grid.queue);

@@ -1,6 +1,12 @@
 'use strict';
 
-Mailing.panel.queue = function (config) {
+Ext.onReady(function () {
+    MODx.add({
+        xtype: 'mailing-panel-queues'
+    });
+});
+
+Mailing.panel.queues = function (config) {
     config = config || {};
     if (!config.id) {
         config.id = 'mailing-panel-queue';
@@ -8,9 +14,9 @@ Mailing.panel.queue = function (config) {
     Ext.applyIf(config, {
         pageHeader: _('mailing.section.queues')
     });
-    Mailing.panel.queue.superclass.constructor.call(this, config);
+    Mailing.panel.queues.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.panel.queue, Mailing.panel.simple, {
+Ext.extend(Mailing.panel.queues, Mailing.panel.simple, {
     getContent: function () {
         return [
             this.renderDescription(_('mailing.tab.queues.management')),
@@ -18,10 +24,4 @@ Ext.extend(Mailing.panel.queue, Mailing.panel.simple, {
         ];
     }
 });
-Ext.reg('mailing-panel-queue', Mailing.panel.queue);
-//TODO
-Ext.onReady(function () {
-    MODx.add({
-        xtype: 'mailing-panel-queue'
-    });
-});
+Ext.reg('mailing-panel-queues', Mailing.panel.queues);

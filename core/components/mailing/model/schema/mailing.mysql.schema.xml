@@ -4,7 +4,9 @@
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="description" dbtype="text" phptype="string" null="true"/>
         <field key="user_group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
-        <field key="subject" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="email_from" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="email_from_name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="email_subject" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="template" dbtype="text" phptype="string" null="true"/>
         <!--Indexes-->
         <index alias="user_group_id" name="user_group_id" primary="false" unique="false" type="BTREE">

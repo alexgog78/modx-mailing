@@ -23,22 +23,4 @@ abstract class mailingManagerController extends amManagerController
             []
         );
     }
-
-    /**
-     * @return void
-     */
-    protected function loadTemplatesCssJs()
-    {
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/grid.js');
-        //$this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/producttab/producttab.window.js');
-    }
-
-    /**
-     * @return void
-     */
-    protected function loadQueuesCssJs()
-    {
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/queue/grid.js');
-        //$this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/producttab/producttab.window.js');
-    }
 }

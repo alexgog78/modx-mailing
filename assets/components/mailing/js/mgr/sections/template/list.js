@@ -1,6 +1,12 @@
 'use strict';
 
-Mailing.panel.template = function (config) {
+Ext.onReady(function () {
+    MODx.add({
+        xtype: 'mailing-panel-templates'
+    });
+});
+
+Mailing.panel.templates = function (config) {
     config = config || {};
     if (!config.id) {
         config.id = 'mailing-panel-template';
@@ -8,9 +14,9 @@ Mailing.panel.template = function (config) {
     Ext.applyIf(config, {
         pageHeader: _('mailing.section.templates')
     });
-    Mailing.panel.template.superclass.constructor.call(this, config);
+    Mailing.panel.templates.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.panel.template, Mailing.panel.simple, {
+Ext.extend(Mailing.panel.templates, Mailing.panel.simple, {
     getContent: function () {
         return [
             this.renderDescription(_('mailing.tab.templates.management')),
@@ -18,9 +24,4 @@ Ext.extend(Mailing.panel.template, Mailing.panel.simple, {
         ];
     }
 });
-Ext.reg('mailing-panel-template', Mailing.panel.template);
-Ext.onReady(function () {
-    MODx.add({
-        xtype: 'mailing-panel-template'
-    });
-});
+Ext.reg('mailing-panel-templates', Mailing.panel.templates);

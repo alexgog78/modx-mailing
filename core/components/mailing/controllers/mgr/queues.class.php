@@ -20,7 +20,7 @@ class mailingMgrQueuesManagerController extends mailingManagerController
     public function loadCustomCssJs()
     {
         parent::loadCustomCssJs();
-        $this->loadQueuesCssJs();
-        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/queue/panel.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/queue/grid.js');
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/queue/list.js');
     }
 }

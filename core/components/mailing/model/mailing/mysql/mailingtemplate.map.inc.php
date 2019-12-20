@@ -12,7 +12,9 @@ $xpdo_meta_map['mailingTemplate'] = [
         'name' => NULL,
         'description' => NULL,
         'user_group_id' => 0,
-        'subject' => NULL,
+        'email_from' => NULL,
+        'email_from_name' => NULL,
+        'email_subject' => NULL,
         'template' => NULL,
     ],
     'fieldMeta' => [
@@ -35,7 +37,19 @@ $xpdo_meta_map['mailingTemplate'] = [
             'null' => false,
             'default' => 0,
         ],
-        'subject' => [
+        'email_from' => [
+            'dbtype' => 'varchar',
+            'precision' => '255',
+            'phptype' => 'string',
+            'null' => true,
+        ],
+        'email_from_name' => [
+            'dbtype' => 'varchar',
+            'precision' => '255',
+            'phptype' => 'string',
+            'null' => true,
+        ],
+        'email_subject' => [
             'dbtype' => 'varchar',
             'precision' => '255',
             'phptype' => 'string',

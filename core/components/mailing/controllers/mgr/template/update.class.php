@@ -33,8 +33,8 @@ class mailingMgrTemplateUpdateManagerController extends mailingManagerController
     public function loadCustomCssJs()
     {
         parent::loadCustomCssJs();
-        //$this->loadProductGroupCssJs();
-        //$this->loadProductGroupIngredientGroupsCssJs();
-        //$this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/productgroup/productgroup.update.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/formpanel.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/form.js');
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/template/update.js');
     }
 }
