@@ -12,11 +12,11 @@ Mailing.panel.queues = function (config) {
         config.id = 'mailing-panel-queue';
     }
     Ext.applyIf(config, {
-        pageHeader: _('mailing.section.queues')
+        pageHeader: _('mailing.section.queues'),
     });
     Mailing.panel.queues.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.panel.queues, Mailing.panel.simple, {
+Ext.extend(Mailing.panel.queues, Mailing.panel.abstract, {
     getContent: function () {
         return [
             this.renderDescription(_('mailing.tab.queues.management')),

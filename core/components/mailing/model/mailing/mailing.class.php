@@ -9,6 +9,23 @@ class Mailing extends abstractModule
     /** @var string|null */
     protected $tablePrefix = 'mailing_';
 
+    /** @var array */
+    public $handlers = [
+        'mgr' => [
+            'template' => 'mailingTemplateHandler',
+            'email' => 'mailingEmailHandler',
+        ],
+        'default' => [],
+    ];
+
+    public function __construct(modX &$modx, array $config = [])
+    {
+        parent::__construct($modx, $config);
+        $this->config = array_merge($this->config, [
+            'previewUrl' => $this->config['assetsUrl'] . 'preview.php'
+        ]);
+    }
+
     /**
      * @param modManagerController $controller
      * @return bool
@@ -18,6 +35,8 @@ class Mailing extends abstractModule
         parent::addBackendAssets($controller);
         $controller->addCss($this->config['cssUrl'] . 'mgr/default.css');
         $controller->addJavascript($this->config['jsUrl'] . 'mgr/' . $this->objectType . '.js');
+        $controller->addJavascript($this->config['jsUrl'] . 'mgr/utils/notice.indevelopment.js');
+        $controller->addJavascript($this->config['jsUrl'] . 'mgr/utils/notice.undefined.js');
         /*$controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/field.multiselect.js');
         $controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/xtype.multiselect.js');
         $controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/browser.js');

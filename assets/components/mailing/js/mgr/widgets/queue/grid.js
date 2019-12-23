@@ -38,9 +38,39 @@ Ext.extend(Mailing.grid.queue, Mailing.grid.abstract, {
 
     renderToolbar: function () {
         return [
+            this.renderSendButton(),
             '->',
             this.renderSearchPanel()
         ];
-    }
+    },
+
+    renderSendButton: function () {
+        return {
+            text: _('submit'),
+            cls: 'primary-button',
+            handler: this.send,
+            scope: this
+        };
+    },
+
+    send: function (btn, e) {
+        console.log('SEND!!!');
+        /*var window = Ext.getCmp(this.recordActions.xtype);
+        if (window) {
+            window.close();
+        }
+        window = MODx.load({
+            xtype: this.recordActions.xtype,
+            title: _('create'),
+            parent: this,
+            blankValues: true,
+            baseParams: {
+                action: this.recordActions.action.create
+            }
+        });
+        if (window) {
+            window.show(e.target);
+        }*/
+    },
 });
 Ext.reg('mailing-grid-queue', Mailing.grid.queue);

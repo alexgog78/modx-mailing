@@ -16,7 +16,7 @@ Mailing.panel.templates = function (config) {
     });
     Mailing.panel.templates.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.panel.templates, Mailing.panel.simple, {
+Ext.extend(Mailing.panel.templates, Mailing.panel.abstract, {
     getContent: function () {
         return [
             this.renderDescription(_('mailing.tab.templates.management')),

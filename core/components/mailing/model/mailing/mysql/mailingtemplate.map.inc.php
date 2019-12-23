@@ -15,7 +15,7 @@ $xpdo_meta_map['mailingTemplate'] = [
         'email_from' => NULL,
         'email_from_name' => NULL,
         'email_subject' => NULL,
-        'template' => NULL,
+        'content' => NULL,
     ],
     'fieldMeta' => [
         'name' => [
@@ -55,7 +55,7 @@ $xpdo_meta_map['mailingTemplate'] = [
             'phptype' => 'string',
             'null' => true,
         ],
-        'template' => [
+        'content' => [
             'dbtype' => 'text',
             'phptype' => 'string',
             'null' => true,

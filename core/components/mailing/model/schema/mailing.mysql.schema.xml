@@ -7,7 +7,7 @@
         <field key="email_from" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="email_from_name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="email_subject" dbtype="varchar" precision="255" phptype="string" null="true"/>
-        <field key="template" dbtype="text" phptype="string" null="true"/>
+        <field key="content" dbtype="text" phptype="string" null="true"/>
         <!--Indexes-->
         <index alias="user_group_id" name="user_group_id" primary="false" unique="false" type="BTREE">
             <column key="user_group_id" length="" collation="A" null="false"/>
