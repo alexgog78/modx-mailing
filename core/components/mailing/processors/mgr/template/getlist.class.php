@@ -1,7 +1,7 @@
 <?php
 
-if (!class_exists('amObjectGetListProcessor')) {
-    require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/getlist.class.php';
+if (!$this->loadClass('getlist', MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/', true, true)) {
+    return false;
 }
 
 class mailingTemplateGetListProcessor extends amObjectGetListProcessor
@@ -11,6 +11,27 @@ class mailingTemplateGetListProcessor extends amObjectGetListProcessor
 
     /** @var string */
     public $objectType = 'mailing';
+
+    /**
+     * @param xPDOQuery $c
+     * @return xPDOQuery
+     */
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
+        $c = parent::prepareQueryBeforeCount($c);
+        $c->leftJoin('modUserGroup', 'UserGroup');
+        return $c;
+    }
+
+    /**
+     * @param xPDOQuery $c
+     * @return xPDOQuery
+     */
+    public function prepareQueryAfterCount(xPDOQuery $c) {
+        $c = parent::prepareQueryAfterCount($c);
+        $c->select($this->modx->getSelectColumns('modUserGroup', 'UserGroup', 'user_group_', ['name']));
+        return $c;
+    }
 
     /**
      * @param xPDOQuery $c

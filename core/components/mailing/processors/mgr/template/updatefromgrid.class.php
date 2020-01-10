@@ -1,7 +1,7 @@
 <?php
 
-if (!class_exists('mailingTemplateUpdateProcessor')) {
-    require_once(dirname(__FILE__) . '/update.class.php');
+if (!$this->loadClass('update', MODX_CORE_PATH . 'components/mailing/processors/mgr/template/', true, true)) {
+    return false;
 }
 
 class mailingTemplateUpdateFromGridProcessor extends mailingTemplateUpdateProcessor

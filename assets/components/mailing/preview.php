@@ -1,8 +1,21 @@
 <?php
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
+/*require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
-require_once MODX_CONNECTORS_PATH . 'index.php';
+require_once MODX_CONNECTORS_PATH . 'index.php';*/
+
+define('MODX_API_MODE', true);
+require dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
+
+/*$basePath = dirname(dirname(dirname(dirname(__FILE__))));
+
+require_once $basePath . '/config.core.php';
+require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
+
+$modx = new modX();
+$modx->initialize('web');*/
+//$modx->setLogLevel(modX::LOG_LEVEL_INFO);
+//$modx->setLogTarget('ECHO');
 
 class MailingPreview
 {
@@ -77,7 +90,7 @@ class MailingPreview
     private function parseContent($content)
     {
         $tpl = '@INLINE ' . $content;
-        $content = $this->pdoTools->getChunk($tpl, []);
+        $content = $this->pdoTools->getChunk($tpl, [], true);
         return $content;
     }
 }

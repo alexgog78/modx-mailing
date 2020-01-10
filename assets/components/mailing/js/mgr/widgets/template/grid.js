@@ -16,12 +16,13 @@ Mailing.grid.template = function (config) {
             'name',
             'description',
             'user_group_id',
+            'user_group_name',
         ],
         gridColumns: {
             'id': {header: _('id'), width: 0.05},
             'name': {header: _('mailing.field.name'), width: 0.2, editor: {xtype: 'textfield'}},
             'description': {header: _('mailing.field.description'), width: 0.6, editor: {xtype: 'textfield'}},
-            'user_group_id': {header: _('mailing.field.user_group'), width: 0.2},
+            'user_group_name': {header: _('mailing.field.user_group'), width: 0.2},
         },
         recordActions: {
             xtype: 'mailing-window-template',

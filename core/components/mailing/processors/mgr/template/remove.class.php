@@ -1,7 +1,7 @@
 <?php
 
-if (!class_exists('amObjectRemoveProcessor')) {
-    require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/remove.class.php';
+if (!$this->loadClass('remove', MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/', true, true)) {
+    return false;
 }
 
 class mailingTemplateRemoveProcessor extends amObjectRemoveProcessor

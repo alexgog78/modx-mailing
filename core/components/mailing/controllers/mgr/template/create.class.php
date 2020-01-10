@@ -23,15 +23,7 @@ class mailingMgrTemplateCreateManagerController extends mailingManagerController
     {
         parent::loadCustomCssJs();
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/formpanel.js');
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/form.js');
         $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/template/create.js');
-
-        $this->onTempFormPrerender = $this->modx->invokeEvent('OnTempFormPrerender',array(
-            'id' => 0,
-            'mode' => modSystemEvent::MODE_NEW,
-        ));
-        //$this->module->log($this->onTempFormPrerender);
-        /*if (is_array($this->onTempFormPrerender)) $this->onTempFormPrerender = implode('',$this->onTempFormPrerender);
-        $this->setPlaceholder('onTempFormPrerender', $this->onTempFormPrerender);*/
+        $this->loadCodeEditor();
     }
 }

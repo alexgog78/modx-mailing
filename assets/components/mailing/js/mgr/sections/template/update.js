@@ -104,7 +104,7 @@ Ext.extend(Mailing.page.template.update, Mailing.page.abstract, {
     },
 
     preview: function () {
-        window.open(Mailing.config.previewUrl + '?template=' + this.recordId);
+        window.open(Mailing.config.previewUrl + '?template=' + this.config.recordId);
     },
 
     close: function () {

@@ -1,7 +1,7 @@
 <?php
 
-if (!class_exists('amObjectCreateProcessor')) {
-    require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/create.class.php';
+if (!$this->loadClass('create', MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/', true, true)) {
+    return false;
 }
 
 class mailingTemplateCreateProcessor extends amObjectCreateProcessor

@@ -24,9 +24,7 @@ class mailingMgrTemplateUpdateManagerController extends mailingManagerController
      * @return mixed
      */
     public function process(array $scriptProperties = []) {
-        $this->checkForRecord($scriptProperties);
-
-        //$this->template = $this->modx->getObject('mailingTemplate', array('id' => $scriptProperties['id']));
+        $this->getRecord($scriptProperties);
     }
 
     /**
@@ -36,31 +34,17 @@ class mailingMgrTemplateUpdateManagerController extends mailingManagerController
     {
         parent::loadCustomCssJs();
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/formpanel.js');
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/form.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/users/grid.js');
         $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/template/update.js');
+        $this->loadCodeEditor();
 
-        $this->addHtml('<script type="text/javascript">
-            // <![CDATA[
-            Ext.onReady(function() {
-                MODx.load({
-                    xtype: "mailing-page-template-update",
-                    record:'. $this->modx->toJSON($this->record->toArray()) . '
-                });
-            });
-            // ]]>
-           </script>');
-
-        $this->onTempFormPrerender = $this->modx->invokeEvent('OnTempFormPrerender',array(
-            'id' => $this->record->get('id'),
-            'template' => &$this->record,
-            'mode' => modSystemEvent::MODE_UPD,
-        ));
-        //$this->module->log($this->record);
-        /*$this->onTempFormPrerender = $this->modx->invokeEvent('OnTempFormPrerender',array(
-            'id' => 0,
-            'mode' => modSystemEvent::MODE_NEW,
-        ));*/
-        //if (is_array($this->onTempFormPrerender)) $this->onTempFormPrerender = implode('',$this->onTempFormPrerender);
-        //$this->setPlaceholder('onTempFormPrerender', $this->onTempFormPrerender);
+        $configJs = $this->modx->toJSON([
+            'xtype' => 'mailing-page-template-update',
+            'recordId' => $this->record->id,
+            'record' => $this->record->toArray(),
+        ]);
+        $this->addHtml(
+            '<script type="text/javascript">Ext.onReady(function () {MODx.load(' . $configJs . ');});</script>'
+        );
     }
 }
