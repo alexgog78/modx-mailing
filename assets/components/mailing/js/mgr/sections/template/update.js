@@ -82,6 +82,87 @@ Ext.extend(Mailing.page.template.update, Mailing.page.abstract, {
 
     addQueues: function () {
         console.log('addQueues');
+
+
+        //if (!this.fireEvent('beforeClearCache')) { return false; }
+
+        var topic = '/queueimport/';
+        var register = 'zzz';
+
+        this.console = Ext.getCmp('zzzz');
+        if (this.console) {
+            this.console.close();
+        }
+
+        this.console = MODx.load({
+            xtype: 'modx-console',
+            id: 'zzzz'
+            ,register: register
+            ,topic: topic
+            ,clear: true
+            ,show_filename: 0
+            ,listeners: {
+                'shutdown': {fn:function() {
+                        /*if (this.fireEvent('afterClearCache')) {
+                            if (MODx.config.clear_cache_refresh_trees == 1) {
+                                Ext.getCmp('modx-layout').refreshTrees();
+                            }
+                        }*/
+                        console.log('shutdown');
+
+                        //this.hideConsole();
+
+                        /*MODx.msg.status({
+                            title: _('success')
+                            ,message: '1111'
+                            ,dontHide: false
+                        });*/
+
+                    },scope:this}
+            }
+        });
+
+        this.console.show(Ext.getBody());
+
+
+        MODx.Ajax.request({
+            url: Mailing.config.connectorUrl
+            ,params: {
+                action: 'mgr/queue/import',
+                id: this.config.recordId
+
+                ,register: register
+                ,topic: topic
+            }
+            ,listeners: {
+                'success':{fn:function() {
+                        this.console.fireEvent('complete');
+                        //this.console.hide();
+                    },scope:this}
+            }
+        });
+
+        /*MODx.Ajax.request({
+            url: MODx.config.connector_url
+            ,params: {
+                action: 'system/clearcache'
+                ,register: 'mgr'
+                ,topic: topic
+                ,media_sources: true
+                ,menu: true
+                ,action_map: true
+            }
+            ,listeners: {
+                'success':{fn:function() {
+                        this.console.fireEvent('complete');
+                    },scope:this}
+            }
+        });*/
+        return true;
+
+
+
+
     },
 
     delete: function () {

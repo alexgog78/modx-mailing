@@ -14,8 +14,11 @@ Mailing.grid.queue = function (config) {
         fields: [
             'id',
             'email',
+            'template_id',
+            'status',
+            'status_properties',
         ],
-        gridColumns: {
+        _gridColumns: {
             'id': {header: _('id'), width: 0.05},
             'email': {header: _('mailing.field.email'), width: 0.2}
         },

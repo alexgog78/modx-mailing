@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="mailing_" version="1.0">
+<model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="mailing_" version="1.1">
     <object class="mailingTemplate" table="templates" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="description" dbtype="text" phptype="string" null="true"/>
@@ -21,13 +21,14 @@
     <object class="mailingQueue" table="queues" extends="xPDOSimpleObject">
         <field key="email" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="template_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
-        <field key="is_processed" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="status" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="status_properties" dbtype="text" phptype="json" null="true"/>
         <!--Indexes-->
         <index alias="template_id" name="template_id" primary="false" unique="false" type="BTREE">
             <column key="template_id" length="" collation="A" null="false"/>
         </index>
-        <index alias="is_processed" name="is_processed" primary="false" unique="false" type="BTREE">
-            <column key="is_processed" length="" collation="A" null="false"/>
+        <index alias="status" name="status" primary="false" unique="false" type="BTREE">
+            <column key="status" length="" collation="A" null="false"/>
         </index>
         <!--Links-->
         <aggregate alias="Template" class="mailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>

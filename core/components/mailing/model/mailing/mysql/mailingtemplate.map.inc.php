@@ -2,7 +2,7 @@
 
 $xpdo_meta_map['mailingTemplate'] = [
     'package' => 'mailing',
-    'version' => '1.0',
+    'version' => '1.1',
     'table' => 'templates',
     'extends' => 'xPDOSimpleObject',
     'tableMeta' => [

@@ -27,7 +27,8 @@ class mailingTemplateGetListProcessor extends amObjectGetListProcessor
      * @param xPDOQuery $c
      * @return xPDOQuery
      */
-    public function prepareQueryAfterCount(xPDOQuery $c) {
+    public function prepareQueryAfterCount(xPDOQuery $c)
+    {
         $c = parent::prepareQueryAfterCount($c);
         $c->select($this->modx->getSelectColumns('modUserGroup', 'UserGroup', 'user_group_', ['name']));
         return $c;
@@ -42,7 +43,7 @@ class mailingTemplateGetListProcessor extends amObjectGetListProcessor
     {
         $c->where([
             'name:LIKE' => '%' . $query . '%',
-            'OR:description:LIKE' => '%' . $query . '%'
+            'OR:description:LIKE' => '%' . $query . '%',
         ]);
         return $c;
     }

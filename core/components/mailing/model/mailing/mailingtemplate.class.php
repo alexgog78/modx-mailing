@@ -1,7 +1,7 @@
 <?php
 
-if (!class_exists('amSimpleObject')) {
-    require_once MODX_CORE_PATH . 'components/abstractmodule/model/abstractmodule/amsimpleobject.class.php';
+if (!$this->loadClass('amsimpleobject', MODX_CORE_PATH . 'components/abstractmodule/model/abstractmodule/', true, true)) {
+    return false;
 }
 
 class mailingTemplate extends amSimpleObject

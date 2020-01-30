@@ -2,7 +2,7 @@
 
 $xpdo_meta_map['mailingQueue'] = [
     'package' => 'mailing',
-    'version' => '1.0',
+    'version' => '1.1',
     'table' => 'queues',
     'extends' => 'xPDOSimpleObject',
     'tableMeta' => [
@@ -11,7 +11,8 @@ $xpdo_meta_map['mailingQueue'] = [
     'fields' => [
         'email' => NULL,
         'template_id' => NULL,
-        'is_processed' => 0,
+        'status' => 0,
+        'status_properties' => NULL,
     ],
     'fieldMeta' => [
         'email' => [
@@ -27,13 +28,18 @@ $xpdo_meta_map['mailingQueue'] = [
             'phptype' => 'integer',
             'null' => false,
         ],
-        'is_processed' => [
+        'status' => [
             'dbtype' => 'tinyint',
             'precision' => '1',
+            'phptype' => 'integer',
             'attributes' => 'unsigned',
-            'phptype' => 'boolean',
             'null' => false,
             'default' => 0,
+        ],
+        'status_properties' => [
+            'dbtype' => 'text',
+            'phptype' => 'json',
+            'null' => true,
         ],
     ],
     'indexes' => [
@@ -50,13 +56,13 @@ $xpdo_meta_map['mailingQueue'] = [
                 ],
             ],
         ],
-        'is_processed' => [
-            'alias' => 'is_processed',
+        'status' => [
+            'alias' => 'status',
             'primary' => false,
             'unique' => false,
             'type' => 'BTREE',
             'columns' => [
-                'is_processed' => [
+                'status' => [
                     'length' => '',
                     'collation' => 'A',
                     'null' => false,

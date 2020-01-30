@@ -15,5 +15,9 @@ $_lang[$prefix . '.tab.template.content'] = 'Шаблон';
 $_lang[$prefix . '.tab.template.content.management'] = 'HTML шаблон письма. Возможно использование синтаксиса Fenom.';
 $_lang[$prefix . '.tab.template.users'] = 'Пользователи';
 $_lang[$prefix . '.tab.template.users.management'] = 'Список пользователей подписанных на рассылку.';
+$_lang[$prefix . '.tab.queue.new'] = 'В очереди на рассылку';
+$_lang[$prefix . '.tab.queue.new.management'] = 'Список пользователей в очереди на рассылку.';
+$_lang[$prefix . '.tab.queue.processed'] = 'Завершенные';
+$_lang[$prefix . '.tab.queue.processed.management'] = 'Список пользователей которым отправленно письмо.';
 
 $_lang[$prefix . '.action.add_queues'] = 'Добавить в очередь';
