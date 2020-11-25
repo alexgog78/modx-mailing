@@ -1,50 +1,66 @@
 <?php
 
-if (!class_exists('mailingManagerController')) {
-    require_once dirname(dirname(__FILE__)) . '/manager.class.php';
+if (!class_exists('MailingManagerController')) {
+    require_once dirname(__DIR__) . '/manager.class.php';
 }
 
-class mailingMgrTemplateUpdateManagerController extends mailingManagerController
+class MailingMgrTemplateUpdateManagerController extends MailingManagerController
 {
     /** @var string */
-    protected $recordClassKey = 'mailingTemplate';
+    protected $objectGetProcessorPath = 'mgr/template/get';
+
+    /** @var string */
+    protected $objectPrimaryKey = 'id';
+
+    /** @var array */
+    protected $object = [];
+
+    /**
+     * @param array $scriptProperties
+     */
+    public function process(array $scriptProperties = [])
+    {
+        $this->object = $this->getRecord($scriptProperties);
+    }
 
     /**
      * @return string
      */
     public function getPageTitle()
     {
-        return $this->getLexicon('title.editing', [
-            'record' => $this->getLexicon('section.template')
+        return $this->getLexiconTopic('editing', [
+                'record' => $this->getLexiconTopic('template'),
+            ]) . parent::getPageTitle();
+    }
+
+    public function loadCustomCssJs()
+    {
+        parent::loadCustomCssJs();
+        $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/formpanel.template.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/grid.user.js');
+        $this->addLastJavascript($this->service->jsUrl . 'mgr/sections/template/update.js');
+        $configJs = $this->modx->toJSON([
+            'xtype' => 'mailing-page-template-update',
+            'record' => $this->object,
         ]);
+        $this->addHtml('<script type="text/javascript">Ext.onReady(function() { MODx.load(' . $configJs . '); });</script>');
     }
 
     /**
      * @param array $scriptProperties
      * @return mixed
      */
-    public function process(array $scriptProperties = []) {
-        $this->getRecord($scriptProperties);
-    }
-
-    /**
-     * @return void
-     */
-    public function loadCustomCssJs()
+    private function getRecord($scriptProperties = [])
     {
-        parent::loadCustomCssJs();
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/formpanel.js');
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/template/users/grid.js');
-        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/template/update.js');
-        $this->loadCodeEditor();
-
-        $configJs = $this->modx->toJSON([
-            'xtype' => 'mailing-page-template-update',
-            'recordId' => $this->record->id,
-            'record' => $this->record->toArray(),
+        $primaryKey = $scriptProperties[$this->objectPrimaryKey];
+        $response = $this->modx->runProcessor($this->objectGetProcessorPath, [
+            $this->objectPrimaryKey => $primaryKey,
+        ], [
+            'processors_path' => $this->service->processorsPath ?? '',
         ]);
-        $this->addHtml(
-            '<script type="text/javascript">Ext.onReady(function () {MODx.load(' . $configJs . ');});</script>'
-        );
+        if ($response->isError()) {
+            $this->failure($response->getMessage());
+        }
+        return $response->getObject();
     }
 }

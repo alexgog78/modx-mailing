@@ -2,12 +2,6 @@
 
 Ext.namespace('Mailing.page.template');
 
-Ext.onReady(function () {
-    MODx.add({
-        xtype: 'mailing-page-template-create'
-    });
-});
-
 Mailing.page.template.create = function (config) {
     config = config || {};
     Ext.applyIf(config, {
@@ -15,20 +9,20 @@ Mailing.page.template.create = function (config) {
         formpanel: 'mailing-formpanel-template',
         components: [{
             xtype: 'mailing-formpanel-template',
-            renderTo: 'modx-panel-holder'
-        }]
+        }],
+        buttons: this.getButtons(config),
     });
     Mailing.page.template.create.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.page.template.create, Mailing.page.abstract, {
-    getButtons: function () {
+Ext.extend(Mailing.page.template.create, MODx.Component, {
+    getButtons: function (config) {
         return [
-            this.renderSaveButton(),
-            this.renderCloseButton()
+            this.getCreateButton(config),
+            this.getCloseButton(config)
         ];
     },
 
-    renderSaveButton: function() {
+    getCreateButton: function(config) {
         return {
             text: _('save'),
             process: 'mgr/template/create',
@@ -42,15 +36,15 @@ Ext.extend(Mailing.page.template.create, Mailing.page.abstract, {
         };
     },
 
-    renderCloseButton: function () {
+    getCloseButton: function (config) {
         return {
             text: _('close'),
-            handler: this.close,
+            handler: this._close,
             scope: this
         };
     },
 
-    close: function () {
+    _close: function () {
         MODx.loadPage('mgr/templates', 'namespace=mailing')
     }
 });

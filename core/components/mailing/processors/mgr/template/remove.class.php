@@ -1,16 +1,17 @@
 <?php
 
-if (!$this->loadClass('remove', MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/', true, true)) {
-    return false;
-}
-
-class mailingTemplateRemoveProcessor extends amObjectRemoveProcessor
+class MailingTemplateRemoveProcessor extends modObjectRemoveProcessor
 {
     /** @var string */
-    public $classKey = 'mailingTemplate';
+    public $classKey = 'MailingTemplate';
 
     /** @var string */
     public $objectType = 'mailing';
+
+    /** @var array */
+    public $languageTopics = [
+        'mailing:status',
+    ];
 }
 
-return 'mailingTemplateRemoveProcessor';
+return 'MailingTemplateRemoveProcessor';

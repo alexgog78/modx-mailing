@@ -1,6 +1,6 @@
 <?php
 
-$xpdo_meta_map['mailingTemplate'] = [
+$xpdo_meta_map['MailingTemplate'] = [
     'package' => 'mailing',
     'version' => '1.1',
     'table' => 'templates',
@@ -16,6 +16,11 @@ $xpdo_meta_map['mailingTemplate'] = [
         'email_from_name' => NULL,
         'email_subject' => NULL,
         'content' => NULL,
+        'created_on' => NULL,
+        'created_by' => 0,
+        'updated_on' => NULL,
+        'updated_by' => 0,
+        'properties' => NULL,
     ],
     'fieldMeta' => [
         'name' => [
@@ -60,6 +65,37 @@ $xpdo_meta_map['mailingTemplate'] = [
             'phptype' => 'string',
             'null' => true,
         ],
+        'created_on' => [
+            'dbtype' => 'datetime',
+            'phptype' => 'datetime',
+            'null' => true,
+        ],
+        'created_by' => [
+            'dbtype' => 'int',
+            'precision' => '10',
+            'attributes' => 'unsigned',
+            'phptype' => 'integer',
+            'null' => false,
+            'default' => 0,
+        ],
+        'updated_on' => [
+            'dbtype' => 'datetime',
+            'phptype' => 'datetime',
+            'null' => true,
+        ],
+        'updated_by' => [
+            'dbtype' => 'int',
+            'precision' => '10',
+            'attributes' => 'unsigned',
+            'phptype' => 'integer',
+            'null' => false,
+            'default' => 0,
+        ],
+        'properties' => [
+            'dbtype' => 'text',
+            'phptype' => 'json',
+            'null' => true,
+        ],
     ],
     'indexes' => [
         'user_group_id' => [
@@ -93,12 +129,44 @@ $xpdo_meta_map['mailingTemplate'] = [
             'cardinality' => 'one',
             'owner' => 'foreign',
         ],
-        'UserGroupMembers' => [
-            'class' => 'modUserGroupMember',
-            'local' => 'user_group_id',
-            'foreign' => 'user_group',
-            'cardinality' => 'many',
-            'owner' => 'local',
+    ],
+    'validation' => [
+        'rules' => [
+            'name' => [
+                'preventBlank' => [
+                    'type' => 'xPDOValidationRule',
+                    'rule' => 'xPDOMinLengthValidationRule',
+                    'value' => '1',
+                    'message' => 'field_required',
+                ],
+            ],
+            'user_group_id' => [
+                'checkUserGroupExistence' => [
+                    'type' => 'xPDOValidationRule',
+                    'rule' => 'xPDOForeignKeyConstraint',
+                    'foreign' => 'id',
+                    'local' => 'user_group_id',
+                    'alias' => 'UserGroup',
+                    'class' => 'modUserGroup',
+                    'message' => 'no_records_found',
+                ],
+            ],
+            'email_subject' => [
+                'preventBlank' => [
+                    'type' => 'xPDOValidationRule',
+                    'rule' => 'xPDOMinLengthValidationRule',
+                    'value' => '1',
+                    'message' => 'field_required',
+                ],
+            ],
+            'content' => [
+                'preventBlank' => [
+                    'type' => 'xPDOValidationRule',
+                    'rule' => 'xPDOMinLengthValidationRule',
+                    'value' => '1',
+                    'message' => 'field_required',
+                ],
+            ],
         ],
     ],
 ];

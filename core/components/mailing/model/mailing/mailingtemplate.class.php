@@ -1,20 +1,16 @@
 <?php
 
-if (!$this->loadClass('amsimpleobject', MODX_CORE_PATH . 'components/abstractmodule/model/abstractmodule/', true, true)) {
-    return false;
-}
-
-class mailingTemplate extends amSimpleObject
+class MailingTemplate extends xPDOSimpleObject
 {
-    const BOOLEAN_FIELDS = [];
+    public function process()
+    {
+        $html = $this->content;
+        $properties = $this->xpdo->fromJson($this->properties);
+        $placeholders = $this->xpdo->toPlaceholders($properties);
 
-    const REQUIRED_FIELDS = [
-        'name',
-    ];
-
-    const UNIQUE_FIELDS = [
-        'name',
-    ];
-
-    const UNIQUE_FIELDS_CHECK_BY_CONDITIONS = [];
+        $maxIterations = (integer)$this->xpdo->getOption('parser_max_iterations', null, 10);
+        $this->xpdo->getParser()->processElementTags('', $html, false, false, '[[', ']]', [], $maxIterations);
+        $this->xpdo->getParser()->processElementTags('', $html, true, true, '[[', ']]', [], $maxIterations);
+        return $html;
+    }
 }

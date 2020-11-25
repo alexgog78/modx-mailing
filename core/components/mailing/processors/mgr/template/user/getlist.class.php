@@ -4,7 +4,7 @@ if (!$this->loadClass('getlist', MODX_CORE_PATH . 'components/abstractmodule/pro
     return false;
 }
 
-class mailingTemplateUserGetListProcessor extends amUserGetListProcessor
+class MailingTemplateUserGetListProcessor extends amUserGetListProcessor
 {
     /**
      * @param xPDOQuery $c
@@ -51,4 +51,4 @@ class mailingTemplateUserGetListProcessor extends amUserGetListProcessor
     }
 }
 
-return 'mailingTemplateUserGetListProcessor';
+return 'MailingTemplateUserGetListProcessor';

@@ -1,10 +1,8 @@
 <?php
 
-if (!$this->loadClass('update', MODX_CORE_PATH . 'components/mailing/processors/mgr/template/', true, true)) {
-    return false;
-}
+require_once __DIR__ . '/update.class.php';
 
-class mailingTemplateUpdateFromGridProcessor extends mailingTemplateUpdateProcessor
+class MailingTemplateUpdateFromGridProcessor extends MailingTemplateUpdateProcessor
 {
     /**
      * @return bool|string|null
@@ -28,4 +26,4 @@ class mailingTemplateUpdateFromGridProcessor extends mailingTemplateUpdateProces
     }
 }
 
-return 'mailingTemplateUpdateFromGridProcessor';
+return 'MailingTemplateUpdateFromGridProcessor';

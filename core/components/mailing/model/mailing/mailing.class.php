@@ -1,48 +1,69 @@
 <?php
 
-if (!class_exists('abstractModule')) {
-    require_once MODX_CORE_PATH . 'components/abstractmodule/model/abstractmodule/abstractmodule.class.php';
-}
-
-class Mailing extends abstractModule
+class Mailing
 {
-    /** @var string|null */
-    protected $tablePrefix = 'mailing_';
+    const PKG_VERSION = '1.0.0';
+
+    const PKG_RELEASE = 'beta';
+
+    const PKG_NAMESPACE = 'mailing';
+
+    const TABLE_PREFIX = 'mailing_';
+
+    /** @var modX */
+    public $modx;
 
     /** @var array */
-    public $handlers = [
-        'mgr' => [
-            'template' => 'mailingTemplateHandler',
-            'email' => 'mailingEmailHandler',
-        ],
-        'default' => [],
-    ];
+    public $config = [];
 
-    public function __construct(modX &$modx, array $config = [])
+    /**
+     * Mailing constructor.
+     *
+     * @param modX $modx
+     * @param array $config
+     */
+    public function __construct(modX $modx, array $config = [])
     {
-        parent::__construct($modx, $config);
-        $this->config['previewUrl'] = $this->config['assetsUrl'] . 'preview.php';
+        $this->modx = $modx;
+        $this->config = $this->getConfig($config);
+        $this->modx->addPackage(self::PKG_NAMESPACE, $this->modelPath, self::TABLE_PREFIX);
+        $this->modx->lexicon->load(self::PKG_NAMESPACE . ':default');
     }
 
     /**
-     * @param modManagerController $controller
-     * @return bool
+     * @param $name
+     * @return mixed|null
      */
-    public function addBackendAssets(modManagerController $controller)
+    public function __get($name)
     {
-        parent::addBackendAssets($controller);
-        $controller->addCss($this->config['cssUrl'] . 'mgr/default.css');
-        $controller->addJavascript($this->config['jsUrl'] . 'mgr/' . $this->objectType . '.js');
-        $controller->addJavascript($this->config['jsUrl'] . 'mgr/utils/notice.indevelopment.js');
-        $controller->addJavascript($this->config['jsUrl'] . 'mgr/utils/notice.undefined.js');
-        return true;
+        if (isset($this->config[$name])) {
+            return $this->config[$name];
+        }
+        return null;
     }
 
     /**
-     * @return bool
+     * @param array $config
+     * @return array
      */
-    public function addFrontendAssets()
+    protected function getConfig($config = [])
     {
-        return false;
+        $corePath = $this->modx->getOption(self::PKG_NAMESPACE . '.core_path', $config, MODX_CORE_PATH . 'components/' . self::PKG_NAMESPACE . '/');
+        $assetsPath = $this->modx->getOption(self::PKG_NAMESPACE . '.assets_path', $config, MODX_ASSETS_PATH . 'components/' . self::PKG_NAMESPACE . '/');
+        $assetsUrl = $this->modx->getOption(self::PKG_NAMESPACE . '.assets_url', $config, MODX_ASSETS_URL . 'components/' . self::PKG_NAMESPACE . '/');
+        return array_merge([
+            'corePath' => $corePath,
+            'assetsPath' => $assetsPath,
+            'modelPath' => $corePath . 'model/',
+            'schemaPath' => $corePath . 'model/schema/',
+            'helpersPath' => $corePath . 'helpers/',
+            'processorsPath' => $corePath . 'processors/',
+
+            'assetsUrl' => $assetsUrl,
+            'jsUrl' => $assetsUrl . 'js/',
+            'cssUrl' => $assetsUrl . 'css/',
+            'connectorUrl' => $assetsUrl . 'connector.php',
+            'previewUrl' => $assetsUrl . 'preview.php',
+        ], $config);
     }
 }
