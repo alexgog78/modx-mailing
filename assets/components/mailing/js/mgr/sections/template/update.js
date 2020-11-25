@@ -9,8 +9,6 @@ Mailing.page.template.update = function (config) {
         formpanel: 'mailing-formpanel-template',
         components: [{
             xtype: 'mailing-formpanel-template',
-            //renderTo: 'modx-panel-holder',
-            //recordId: config.recordId,
             record: config.record
         }],
         buttons: this.getButtons(config),

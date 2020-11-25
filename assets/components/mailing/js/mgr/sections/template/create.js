@@ -9,6 +9,7 @@ Mailing.page.template.create = function (config) {
         formpanel: 'mailing-formpanel-template',
         components: [{
             xtype: 'mailing-formpanel-template',
+            defaultValues: config.defaultValues,
         }],
         buttons: this.getButtons(config),
     });

@@ -112,15 +112,6 @@ $xpdo_meta_map['MailingTemplate'] = [
             ],
         ],
     ],
-    'composites' => [
-        'Queues' => [
-            'class' => 'mailingQueue',
-            'local' => 'id',
-            'foreign' => 'template_id',
-            'cardinality' => 'many',
-            'owner' => 'local',
-        ],
-    ],
     'aggregates' => [
         'UserGroup' => [
             'class' => 'modUserGroup',
@@ -128,6 +119,13 @@ $xpdo_meta_map['MailingTemplate'] = [
             'foreign' => 'id',
             'cardinality' => 'one',
             'owner' => 'foreign',
+        ],
+        'Logs' => [
+            'class' => 'MailingLog',
+            'local' => 'id',
+            'foreign' => 'template_id',
+            'cardinality' => 'many',
+            'owner' => 'local',
         ],
     ],
     'validation' => [
@@ -149,22 +147,6 @@ $xpdo_meta_map['MailingTemplate'] = [
                     'alias' => 'UserGroup',
                     'class' => 'modUserGroup',
                     'message' => 'no_records_found',
-                ],
-            ],
-            'email_subject' => [
-                'preventBlank' => [
-                    'type' => 'xPDOValidationRule',
-                    'rule' => 'xPDOMinLengthValidationRule',
-                    'value' => '1',
-                    'message' => 'field_required',
-                ],
-            ],
-            'content' => [
-                'preventBlank' => [
-                    'type' => 'xPDOValidationRule',
-                    'rule' => 'xPDOMinLengthValidationRule',
-                    'value' => '1',
-                    'message' => 'field_required',
                 ],
             ],
         ],

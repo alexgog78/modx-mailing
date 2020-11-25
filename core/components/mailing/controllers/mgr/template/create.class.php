@@ -6,6 +6,20 @@ if (!class_exists('MailingManagerController')) {
 
 class MailingMgrTemplateCreateManagerController extends MailingManagerController
 {
+    /** @var string */
+    protected $objectClassKey = 'MailingTemplate';
+
+    /** @var MailingTemplate */
+    private $objectFactory;
+
+    /**
+     * @param array $scriptProperties
+     */
+    public function process(array $scriptProperties = [])
+    {
+        $this->objectFactory = $this->modx->newObject($this->objectClassKey);
+    }
+
     /**
      * @return string
      */
@@ -22,6 +36,12 @@ class MailingMgrTemplateCreateManagerController extends MailingManagerController
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/formpanel.template.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/grid.user.js');
         $this->addLastJavascript($this->service->jsUrl . 'mgr/sections/template/create.js');
-        $this->addHtml('<script type="text/javascript">Ext.onReady(function() { MODx.load({xtype: "mailing-page-template-create"}); });</script>');
+        $configJs = $this->modx->toJSON([
+            'xtype' => 'mailing-page-template-create',
+            'defaultValues' => [
+                'content' => $this->objectFactory->getEmailDefaultTemplate(),
+            ],
+        ]);
+        $this->addHtml('<script type="text/javascript">Ext.onReady(function() { MODx.load(' . $configJs . '); });</script>');
     }
 }

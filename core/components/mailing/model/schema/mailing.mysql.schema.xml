@@ -21,13 +21,12 @@
         <validation>
             <rule field="name" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
             <rule field="user_group_id" name="checkUserGroupExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="user_group_id" alias="UserGroup" class="modUserGroup" message="no_records_found"/>
-            <rule field="email_subject" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
-            <rule field="content" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
         </validation>
         <!--Links-->
         <aggregate alias="UserGroup" class="modUserGroup" local="user_group_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Logs" class="MailingLog" local="id" foreign="template_id" cardinality="many" owner="local"/>
 <!--        <aggregate alias="UserGroupMembers" class="modUserGroupMember" local="user_group_id" foreign="user_group" cardinality="many" owner="local"/>-->
-        <composite alias="Queues" class="mailingQueue" local="id" foreign="template_id" cardinality="many" owner="local"/>
+<!--        <composite alias="Queues" class="mailingQueue" local="id" foreign="template_id" cardinality="many" owner="local"/>-->
     </object>
 
     <object class="MailingLog" table="logs" extends="xPDOSimpleObject">
@@ -48,11 +47,11 @@
         </index>
         <!--Validation-->
         <validation>
-            <rule field="template_id" name="checkTemplateExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="template_id" alias="User" class="modUser" message="no_records_found"/>
-            <rule field="user_id" name="checkUserExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="user_id" alias="Template" class="mailingTemplate" message="no_records_found"/>
+            <rule field="template_id" name="checkTemplateExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="template_id" alias="Template" class="MailingTemplate" message="no_records_found"/>
+            <rule field="user_id" name="checkUserExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="user_id" alias="User" class="modUser" message="no_records_found"/>
         </validation>
         <!--Links-->
-        <aggregate alias="Template" class="mailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Template" class="MailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
         <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
 </model>

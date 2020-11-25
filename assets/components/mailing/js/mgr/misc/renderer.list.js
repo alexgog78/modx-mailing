@@ -21,29 +21,31 @@ Mailing.renderer = {
         }
     },
 
-    image: function (value, cell, row) {
-        if (/(jpg|png|gif|jpeg)$/i.test(value)) {
-            if (!/^\//.test(value)) {
-                var src = '/' + value;
-            }
-            return '<img src="' + src + '" height="35" alt="" class="grid-image">';
-        }
-    },
-
-    color: function (value, cell, row) {
-        return '<div style="width: 30px; height: 20px; border-radius: 3px; background: #' + value + '">&nbsp;</div>';
-    },
-
     user: function (value, cell, row) {
         if (!value) {
             return '';
         }
-        var id = row.get('id');
+        var id = row.get('user_id');
         if (!id) {
             return value;
         }
         return String.format(
             '<a href="?a=security/user/update&id={0}" target="_blank">{1}</a>',
+            id,
+            value
+        );
+    },
+
+    template: function (value, cell, row) {
+        if (!value) {
+            return '';
+        }
+        var id = row.get('template_id');
+        if (!id) {
+            return value;
+        }
+        return String.format(
+            '<a href="?a=mgr/template/update&namespace=mailing&id={0}" target="_blank">{1}</a>',
             id,
             value
         );

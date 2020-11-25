@@ -3,11 +3,8 @@
 class Mailing
 {
     const PKG_VERSION = '1.0.0';
-
     const PKG_RELEASE = 'beta';
-
     const PKG_NAMESPACE = 'mailing';
-
     const TABLE_PREFIX = 'mailing_';
 
     /** @var modX */
@@ -58,6 +55,8 @@ class Mailing
             'schemaPath' => $corePath . 'model/schema/',
             'helpersPath' => $corePath . 'helpers/',
             'processorsPath' => $corePath . 'processors/',
+            'templatesPath' => $corePath . 'elements/templates/',
+            'cssPath' => $assetsPath . 'css/',
 
             'assetsUrl' => $assetsUrl,
             'jsUrl' => $assetsUrl . 'js/',

@@ -1,11 +1,49 @@
 <?php
 
-if (!$this->loadClass('getlist', MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/user/', true, true)) {
-    return false;
-}
+require_once MODX_CORE_PATH . 'model/modx/processors/security/user/getlist.class.php';
 
-class MailingTemplateUserGetListProcessor extends amUserGetListProcessor
+class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
 {
+    /** @var string */
+    public $defaultSortField = 'id';
+
+    /** @var string */
+    public $objectType = 'mailing';
+
+    /** @var MailingTemplate */
+    protected $mailingTemplate;
+
+    /**
+     * @return array
+     */
+    public function getLanguageTopics()
+    {
+        $this->languageTopics[] = 'mailing:status';
+        return parent::getLanguageTopics();
+    }
+
+    /**
+     * @return bool|string|null
+     */
+    public function initialize()
+    {
+        $templateId = $this->getProperty('template_id');
+        $this->mailingTemplate = $this->modx->getObject('MailingTemplate', [
+            'id' => $templateId,
+        ]);
+        if (!$this->mailingTemplate) {
+            return $this->modx->lexicon($this->objectType . '_err_nfs', ['id' => $templateId]);
+        }
+        $userGroupId = $this->mailingTemplate->get('user_group_id');
+        if (!$userGroupId) {
+            return $this->modx->lexicon($this->objectType . '_err_ns');
+        }
+        /*$this->setDefaultProperties([
+            'usergroup' => $userGroupId,
+        ]);*/
+        return parent::initialize();
+    }
+
     /**
      * @param xPDOQuery $c
      * @return xPDOQuery
@@ -13,41 +51,21 @@ class MailingTemplateUserGetListProcessor extends amUserGetListProcessor
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c = parent::prepareQueryBeforeCount($c);
-
-        $this->filterActive($c);
-
-        $userGroupId = $this->getProperty('user_group_id');
-        if ($userGroupId) {
-            $this->filterUserGroup($c, $userGroupId);
-        }
-        return $c;
-    }
-
-    /**
-     * @param xPDOQuery $c
-     * @return xPDOQuery
-     */
-    private function filterActive(xPDOQuery $c)
-    {
-        $c->where([
+        /*$c->where([
             $this->classKey . '.active' => 1,
             'Profile.blocked' => 0,
-        ]);
+        ]);*/
         return $c;
     }
 
     /**
      * @param xPDOQuery $c
-     * @param int $userGroupId
      * @return xPDOQuery
      */
-    private function filterUserGroup(xPDOQuery $c, $userGroupId = 0)
+    public function prepareQueryAfterCount(xPDOQuery $c)
     {
-        $c->innerJoin('modUserGroupMember', 'UserGroupMembers');
-        $c->where([
-            'UserGroupMembers.user_group' => $userGroupId,
-        ]);
-        return $c;
+        $c->select($this->classKey . '.id AS user_id');
+        return parent::prepareQueryAfterCount($c);
     }
 }
 

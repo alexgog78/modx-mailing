@@ -2,6 +2,7 @@
 
 class MailingTemplateCreateProcessor extends modObjectCreateProcessor
 {
+
     /** @var string */
     public $classKey = 'MailingTemplate';
 

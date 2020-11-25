@@ -6,43 +6,15 @@ Mailing.panel.logs = function (config) {
         config.id = 'mailing-panel-logs';
     }
     Ext.applyIf(config, {
-        cls: 'container',
         items: [
-            this.getHeader(),
-            {
-                layout: 'form',
-                items: [
-                    this.getDescription(),
-                    this.getGrid(),
-                ]
-            }
+            this.getHeader(_('mailing_logs')),
+            this.getMainPartPlain([
+                this.getDescription(_('mailing_logs_management')),
+                this.getContent({xtype: 'mailing-grid-log'}),
+            ])
         ],
     });
     Mailing.panel.logs.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.panel.logs, MODx.FormPanel, {
-    getHeader: function () {
-        return {
-            xtype: 'modx-header',
-            itemId: '',
-            html: _('mailing_logs')
-        };
-    },
-
-    getDescription: function () {
-        return {
-            xtype: 'modx-description',
-            itemId: '',
-            html: '<p>' + _('mailing_logs_management') + '</p>'
-        };
-    },
-
-    getGrid: function () {
-        return {
-            xtype: 'mailing-grid-log',
-            cls: 'main-wrapper',
-            preventRender: true
-        };
-    },
-});
+Ext.extend(Mailing.panel.logs, Mailing.panel, {});
 Ext.reg('mailing-panel-logs', Mailing.panel.logs);

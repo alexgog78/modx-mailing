@@ -19,5 +19,9 @@ $template = $modx->getObject('MailingTemplate', [
 if (!$template) {
     die($modx->lexicon('mailing_err_nfs', ['id' => $_REQUEST['template']]));
 }
-$html = $template->process();
+
+$user = $modx->user;
+$profile = $user->getOne('Profile');
+
+$html = $template->process(['user' => array_merge($user->toArray(), $profile->toArray())]);
 die($html);
