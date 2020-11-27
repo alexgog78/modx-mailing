@@ -1,10 +1,8 @@
 <?php
 
-if (!class_exists('MailingManagerController')) {
-    require_once dirname(__DIR__) . '/manager.class.php';
-}
+require_once dirname(__DIR__) . '/manager.class.php';
 
-class MailingMgrTemplateUpdateManagerController extends MailingManagerController
+class mailingMgrTemplateUpdateManagerController extends mailingManagerController
 {
     /** @var string */
     protected $objectGetProcessorPath = 'mgr/template/get';

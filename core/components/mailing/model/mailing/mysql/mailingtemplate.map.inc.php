@@ -1,17 +1,17 @@
 <?php
 
-$xpdo_meta_map['MailingTemplate'] = [
+$xpdo_meta_map['mailingTemplate'] = [
     'package' => 'mailing',
     'version' => '1.1',
     'table' => 'templates',
     'extends' => 'xPDOSimpleObject',
     'tableMeta' => [
-        'engine' => 'MyISAM',
+        'engine' => 'InnoDB',
     ],
     'fields' => [
         'name' => NULL,
         'description' => NULL,
-        'user_group_id' => 0,
+        'user_group_id' => NULL,
         'email_from' => NULL,
         'email_from_name' => NULL,
         'email_subject' => NULL,
@@ -40,7 +40,6 @@ $xpdo_meta_map['MailingTemplate'] = [
             'attributes' => 'unsigned',
             'phptype' => 'integer',
             'null' => false,
-            'default' => 0,
         ],
         'email_from' => [
             'dbtype' => 'varchar',
@@ -121,7 +120,7 @@ $xpdo_meta_map['MailingTemplate'] = [
             'owner' => 'foreign',
         ],
         'Logs' => [
-            'class' => 'MailingLog',
+            'class' => 'mailingLog',
             'local' => 'id',
             'foreign' => 'template_id',
             'cardinality' => 'many',

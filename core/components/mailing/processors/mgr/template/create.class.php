@@ -1,10 +1,10 @@
 <?php
 
-class MailingTemplateCreateProcessor extends modObjectCreateProcessor
+class mailingTemplateCreateProcessor extends modObjectCreateProcessor
 {
 
     /** @var string */
-    public $classKey = 'MailingTemplate';
+    public $classKey = 'mailingTemplate';
 
     /** @var string */
     public $objectType = 'mailing';
@@ -15,4 +15,4 @@ class MailingTemplateCreateProcessor extends modObjectCreateProcessor
     ];
 }
 
-return 'MailingTemplateCreateProcessor';
+return 'mailingTemplateCreateProcessor';

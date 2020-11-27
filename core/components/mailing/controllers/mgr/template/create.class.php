@@ -1,15 +1,13 @@
 <?php
 
-if (!class_exists('MailingManagerController')) {
-    require_once dirname(__DIR__) . '/manager.class.php';
-}
+require_once dirname(__DIR__) . '/manager.class.php';
 
-class MailingMgrTemplateCreateManagerController extends MailingManagerController
+class mailingMgrTemplateCreateManagerController extends mailingManagerController
 {
     /** @var string */
-    protected $objectClassKey = 'MailingTemplate';
+    protected $objectClassKey = 'mailingTemplate';
 
-    /** @var MailingTemplate */
+    /** @var mailingTemplate */
     private $objectFactory;
 
     /**

@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/helpers/timestamps.trait.php';
 
-class MailingTemplate extends xPDOSimpleObject
+class mailingTemplate extends xPDOSimpleObject
 {
-    use MailingModelTimestamps;
+    use mailingModelTimestamps;
 
     /** @var string|null */
     private $createdOnField = 'created_on';

@@ -2,7 +2,7 @@
 
 $xpdo_meta_map = [
     'xPDOSimpleObject' => [
-        0 => 'MailingTemplate',
-        1 => 'MailingLog',
+        0 => 'mailingTemplate',
+        1 => 'mailingLog',
     ],
 ];

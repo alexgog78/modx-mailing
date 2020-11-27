@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/helpers/timestamps.trait.php';
 
-class MailingLog extends xPDOSimpleObject
+class mailingLog extends xPDOSimpleObject
 {
-    use MailingModelTimestamps;
+    use mailingModelTimestamps;
 
     const STATUS_ERROR = 1;
     const STATUS_SUCCESS = 2;

@@ -1,9 +1,9 @@
 <?php
 
-class MailingTemplateUpdateProcessor extends modObjectUpdateProcessor
+class mailingTemplateUpdateProcessor extends modObjectUpdateProcessor
 {
     /** @var string */
-    public $classKey = 'MailingTemplate';
+    public $classKey = 'mailingTemplate';
 
     /** @var string */
     public $objectType = 'mailing';
@@ -14,4 +14,4 @@ class MailingTemplateUpdateProcessor extends modObjectUpdateProcessor
     ];
 }
 
-return 'MailingTemplateUpdateProcessor';
+return 'mailingTemplateUpdateProcessor';

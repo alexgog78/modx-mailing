@@ -2,16 +2,17 @@
 
 require_once __DIR__ . '/getlist.class.php';
 
+//TODO remove
 require_once dirname(dirname(dirname((dirname((__DIR__)))))) . '/helpers/log.trait.php';
 
-class MailingTemplateUserMailProcessor extends MailingTemplateUserGetListProcessor
+class mailingTemplateUserMailProcessor extends mailingTemplateUserGetListProcessor
 {
-    use MailingLogHelper;
+    use mailingLogHelper;
 
     /**@var modPHPMailer */
     private $mail;
 
-    /** @var MailingLog */
+    /** @var mailingLog */
     protected $mailingLog;
 
     /** @var int */
@@ -75,7 +76,7 @@ class MailingTemplateUserMailProcessor extends MailingTemplateUserGetListProcess
      */
     private function saveLog(xPDOObject $object)
     {
-        $this->mailingLog = $this->modx->newObject('MailingLog');
+        $this->mailingLog = $this->modx->newObject('mailingLog');
         $this->mailingLog->fromArray([
             'template_id' => $this->mailingTemplate->get('id'),
             'user_id' => $object->get('id'),
@@ -119,4 +120,4 @@ class MailingTemplateUserMailProcessor extends MailingTemplateUserGetListProcess
     }
 }
 
-return 'MailingTemplateUserMailProcessor';
+return 'mailingTemplateUserMailProcessor';

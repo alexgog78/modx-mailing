@@ -1,18 +1,19 @@
 <?php
 
-$xpdo_meta_map['MailingLog'] = [
+$xpdo_meta_map['mailingLog'] = [
     'package' => 'mailing',
     'version' => '1.1',
     'table' => 'logs',
     'extends' => 'xPDOSimpleObject',
     'tableMeta' => [
-        'engine' => 'MyISAM',
+        'engine' => 'InnoDB',
     ],
     'fields' => [
         'template_id' => NULL,
         'user_id' => NULL,
-        'created_on' => NULL,
         'status' => 0,
+        'created_on' => NULL,
+        'created_by' => 0,
         'properties' => NULL,
     ],
     'fieldMeta' => [
@@ -30,17 +31,25 @@ $xpdo_meta_map['MailingLog'] = [
             'phptype' => 'integer',
             'null' => false,
         ],
+        'status' => [
+            'dbtype' => 'tinyint',
+            'precision' => '1',
+            'phptype' => 'integer',
+            'attributes' => 'unsigned',
+            'null' => false,
+            'default' => 0,
+        ],
         'created_on' => [
             'dbtype' => 'datetime',
             'phptype' => 'datetime',
             'null' => true,
             'default' => NULL,
         ],
-        'status' => [
-            'dbtype' => 'tinyint',
-            'precision' => '1',
-            'phptype' => 'integer',
+        'created_by' => [
+            'dbtype' => 'int',
+            'precision' => '10',
             'attributes' => 'unsigned',
+            'phptype' => 'integer',
             'null' => false,
             'default' => 0,
         ],
@@ -93,7 +102,7 @@ $xpdo_meta_map['MailingLog'] = [
     ],
     'aggregates' => [
         'Template' => [
-            'class' => 'MailingTemplate',
+            'class' => 'mailingTemplate',
             'local' => 'template_id',
             'foreign' => 'id',
             'cardinality' => 'one',
@@ -116,7 +125,7 @@ $xpdo_meta_map['MailingLog'] = [
                     'foreign' => 'id',
                     'local' => 'template_id',
                     'alias' => 'Template',
-                    'class' => 'MailingTemplate',
+                    'class' => 'mailingTemplate',
                     'message' => 'no_records_found',
                 ],
             ],

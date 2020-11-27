@@ -1,7 +1,11 @@
 <?php
 
+require_once dirname(dirname(__DIR__)) . '/helpers/log.trait.php';
+
 class Mailing
 {
+    use mailingLogHelper;
+
     const PKG_VERSION = '1.0.0';
     const PKG_RELEASE = 'beta';
     const PKG_NAMESPACE = 'mailing';

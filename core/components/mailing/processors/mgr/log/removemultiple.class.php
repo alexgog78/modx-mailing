@@ -2,10 +2,10 @@
 
 require_once __DIR__ . '/remove.class.php';
 
-class MailingLogRemoveMultipleProcessor extends MailingLogRemoveProcessor
+class mailingLogRemoveMultipleProcessor extends mailingLogRemoveProcessor
 {
     /** @var string */
-    public $classKey = 'MailingLog';
+    public $classKey = 'mailingLog';
 
     /** @var string */
     public $objectType = 'mailing';
@@ -36,4 +36,4 @@ class MailingLogRemoveMultipleProcessor extends MailingLogRemoveProcessor
     }
 }
 
-return 'MailingLogRemoveMultipleProcessor';
+return 'mailingLogRemoveMultipleProcessor';

@@ -1,6 +1,6 @@
 <?php
 
-trait MailingLogHelper
+trait mailingLogHelper
 {
     /**
      * @param $data

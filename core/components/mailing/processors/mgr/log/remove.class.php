@@ -1,9 +1,9 @@
 <?php
 
-class MailingLogRemoveProcessor extends modObjectRemoveProcessor
+class mailingLogRemoveProcessor extends modObjectRemoveProcessor
 {
     /** @var string */
-    public $classKey = 'MailingLog';
+    public $classKey = 'mailingLog';
 
     /** @var string */
     public $objectType = 'mailing';
@@ -14,4 +14,4 @@ class MailingLogRemoveProcessor extends modObjectRemoveProcessor
     ];
 }
 
-return 'MailingLogRemoveProcessor';
+return 'mailingLogRemoveProcessor';

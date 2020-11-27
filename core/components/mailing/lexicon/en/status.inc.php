@@ -5,7 +5,7 @@ $prefix = 'mailing';
 $_lang[$prefix . '_scs_create'] = 'Запись успешно создана';
 $_lang[$prefix . '_scs_update'] = 'Данные успешно обновлены';
 $_lang[$prefix . '_scs_delete'] = 'Данные успешно удалены';
-
+$_lang[$prefix . '_scs_mailing'] = 'Рассылка успешно завершена';
 $_lang[$prefix . '_err_nfs'] = 'Запись "[[+id]]" не найдена';
 $_lang[$prefix . '_err_ae'] = 'Такая запись уже есть';
 $_lang[$prefix . '_err_save'] = 'Произошла ошибка при сохранении';
@@ -18,3 +18,4 @@ $_lang[$prefix . '_err_create'] = 'Ошибка создания записи';
 $_lang[$prefix . '_err_update'] = 'Ошибка обновления данных. Проверьте заполненные поля';
 $_lang[$prefix . '_err_delete'] = 'Ошибка удаления данных';
 $_lang[$prefix . '_err_data'] = 'Проверьте введенные данные';
+$_lang[$prefix . '_err_mailing'] = 'Произошла ошибка при рассылке';

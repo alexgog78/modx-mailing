@@ -1,6 +1,6 @@
 <?php
 
-trait MailingProcessorSearch
+trait mailingProcessorSearch
 {
     /**
      * @param xPDOQuery $c
@@ -10,7 +10,8 @@ trait MailingProcessorSearch
     {
         $query = $this->getProperty('query');
         $valuesqry = $this->getProperty('valuesqry');
-        if (empty($query) && !empty($valuesqry)) {
+        $searchableFields = $this->searchableFields;
+        if (empty($query) || !empty($valuesqry) || empty($searchableFields)) {
             return $c;
         }
         $filter = [];

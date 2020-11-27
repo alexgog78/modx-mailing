@@ -2,7 +2,7 @@
 
 require_once MODX_CORE_PATH . 'model/modx/processors/security/user/getlist.class.php';
 
-class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
+class mailingTemplateUserGetListProcessor extends modUserGetListProcessor
 {
     /** @var string */
     public $defaultSortField = 'id';
@@ -10,7 +10,7 @@ class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
     /** @var string */
     public $objectType = 'mailing';
 
-    /** @var MailingTemplate */
+    /** @var mailingTemplate */
     protected $mailingTemplate;
 
     /**
@@ -28,7 +28,7 @@ class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
     public function initialize()
     {
         $templateId = $this->getProperty('template_id');
-        $this->mailingTemplate = $this->modx->getObject('MailingTemplate', [
+        $this->mailingTemplate = $this->modx->getObject('mailingTemplate', [
             'id' => $templateId,
         ]);
         if (!$this->mailingTemplate) {
@@ -38,9 +38,9 @@ class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
         if (!$userGroupId) {
             return $this->modx->lexicon($this->objectType . '_err_ns');
         }
-        /*$this->setDefaultProperties([
+        $this->setDefaultProperties([
             'usergroup' => $userGroupId,
-        ]);*/
+        ]);
         return parent::initialize();
     }
 
@@ -51,10 +51,10 @@ class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c = parent::prepareQueryBeforeCount($c);
-        /*$c->where([
+        $c->where([
             $this->classKey . '.active' => 1,
             'Profile.blocked' => 0,
-        ]);*/
+        ]);
         return $c;
     }
 
@@ -69,4 +69,4 @@ class MailingTemplateUserGetListProcessor extends modUserGetListProcessor
     }
 }
 
-return 'MailingTemplateUserGetListProcessor';
+return 'mailingTemplateUserGetListProcessor';

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="mailing_" version="1.1">
-    <object class="MailingTemplate" table="templates" extends="xPDOSimpleObject">
+<model package="mailing" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" tablePrefix="mailing_" phpdoc-package="mailing" phpdoc-subpackage="" version="1.1">
+    <object class="mailingTemplate" table="templates" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="description" dbtype="text" phptype="string" null="true"/>
-        <field key="user_group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="user_group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
         <field key="email_from" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="email_from_name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="email_subject" dbtype="varchar" precision="255" phptype="string" null="true"/>
@@ -23,17 +23,48 @@
             <rule field="user_group_id" name="checkUserGroupExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="user_group_id" alias="UserGroup" class="modUserGroup" message="no_records_found"/>
         </validation>
         <!--Links-->
-        <aggregate alias="UserGroup" class="modUserGroup" local="user_group_id" foreign="id" cardinality="one" owner="foreign" />
-        <aggregate alias="Logs" class="MailingLog" local="id" foreign="template_id" cardinality="many" owner="local"/>
+        <aggregate alias="UserGroup" class="modUserGroup" local="user_group_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Logs" class="mailingLog" local="id" foreign="template_id" cardinality="many" owner="local"/>
 <!--        <aggregate alias="UserGroupMembers" class="modUserGroupMember" local="user_group_id" foreign="user_group" cardinality="many" owner="local"/>-->
 <!--        <composite alias="Queues" class="mailingQueue" local="id" foreign="template_id" cardinality="many" owner="local"/>-->
     </object>
 
-    <object class="MailingLog" table="logs" extends="xPDOSimpleObject">
+    <!--<object class="mailingQueue" table="queues" extends="xPDOObject">
+        <field key="template_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
+        <field key="log_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="created_on" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="created_by" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="updated_on" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="updated_by" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="template_id" length="" collation="A" null="false"/>
+            <column key="user_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="log_id" name="log_id" primary="false" unique="false" type="BTREE">
+            <column key="log_id" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Template" class="mailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Log" class="mailingLog" local="log_id" foreign="id" cardinality="one" owner="local"/>
+    </object>-->
+
+    <!--<object class="modAccessibleSimpleObject" extends="modAccessibleObject">
+        <field key="id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" generated="native" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="id" length="" collation="A" null="false" />
+        </index>
+    </object>-->
+
+    <object class="mailingLog" table="logs" extends="xPDOSimpleObject">
         <field key="template_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
         <field key="user_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
-        <field key="created_on" dbtype="datetime" phptype="datetime" null="true" default="NULL"/>
         <field key="status" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="created_on" dbtype="datetime" phptype="datetime" null="true" default="NULL"/>
+        <field key="created_by" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
         <field key="properties" dbtype="text" phptype="json" null="true"/>
         <!--Indexes-->
         <index alias="user_id" name="user_id" primary="false" unique="false" type="BTREE">
@@ -47,11 +78,11 @@
         </index>
         <!--Validation-->
         <validation>
-            <rule field="template_id" name="checkTemplateExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="template_id" alias="Template" class="MailingTemplate" message="no_records_found"/>
+            <rule field="template_id" name="checkTemplateExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="template_id" alias="Template" class="mailingTemplate" message="no_records_found"/>
             <rule field="user_id" name="checkUserExistence" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="user_id" alias="User" class="modUser" message="no_records_found"/>
         </validation>
         <!--Links-->
-        <aggregate alias="Template" class="MailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Template" class="mailingTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign"/>
         <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
 </model>

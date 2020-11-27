@@ -1,6 +1,6 @@
 <?php
 
-abstract class MailingManagerController extends modExtraManagerController
+abstract class mailingManagerController extends modExtraManagerController
 {
     /** @var Mailing */
     protected $service;
@@ -44,6 +44,14 @@ abstract class MailingManagerController extends modExtraManagerController
         return $this->languageTopics;
     }
 
+    /**
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        return ' | ' . $this->modx->lexicon($this->namespace);
+    }
+
     public function loadCustomCssJs()
     {
         $this->addCss($this->service->cssUrl . 'mgr/default.css');
@@ -55,14 +63,6 @@ abstract class MailingManagerController extends modExtraManagerController
         $this->addJavascript($this->service->jsUrl . 'mgr/combo/select.usergroup.js');
         $configJs = $this->modx->toJSON($this->service->config ?? []);
         $this->addHtml('<script type="text/javascript">' . get_class($this->service) . '.config = ' . $configJs . ';</script>');
-    }
-
-    /**
-     * @return string
-     */
-    public function getPageTitle()
-    {
-        return ' | ' . $this->modx->lexicon($this->namespace);
     }
 
     /**

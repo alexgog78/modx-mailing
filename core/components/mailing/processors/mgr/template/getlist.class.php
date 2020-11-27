@@ -2,12 +2,12 @@
 
 require_once dirname(__DIR__) . '/helpers/search.trait.php';
 
-class MailingTemplateGetListProcessor extends modObjectGetListProcessor
+class mailingTemplateGetListProcessor extends modObjectGetListProcessor
 {
-    use MailingProcessorSearch;
+    use mailingProcessorSearch;
 
     /** @var string */
-    public $classKey = 'MailingTemplate';
+    public $classKey = 'mailingTemplate';
 
     /** @var string */
     public $objectType = 'mailing';
@@ -46,4 +46,4 @@ class MailingTemplateGetListProcessor extends modObjectGetListProcessor
     }
 }
 
-return 'MailingTemplateGetListProcessor';
+return 'mailingTemplateGetListProcessor';

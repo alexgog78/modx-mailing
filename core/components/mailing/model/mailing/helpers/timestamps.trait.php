@@ -1,6 +1,6 @@
 <?php
 
-trait MailingModelTimestamps
+trait mailingModelTimestamps
 {
     private function setTimestamps()
     {

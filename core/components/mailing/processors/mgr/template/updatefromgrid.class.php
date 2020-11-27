@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/update.class.php';
 
-class MailingTemplateUpdateFromGridProcessor extends MailingTemplateUpdateProcessor
+class mailingTemplateUpdateFromGridProcessor extends mailingTemplateUpdateProcessor
 {
     /**
      * @return bool|string|null
@@ -26,4 +26,4 @@ class MailingTemplateUpdateFromGridProcessor extends MailingTemplateUpdateProces
     }
 }
 
-return 'MailingTemplateUpdateFromGridProcessor';
+return 'mailingTemplateUpdateFromGridProcessor';
