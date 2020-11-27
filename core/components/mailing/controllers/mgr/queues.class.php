@@ -25,6 +25,10 @@ class mailingMgrQueuesManagerController extends mailingManagerController
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/queue/panel.queues.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/queue/grid.queue.js');
         $this->addLastJavascript($this->service->jsUrl . 'mgr/sections/queue/list.js');
-        $this->addHtml('<script type="text/javascript">Ext.onReady(function() { MODx.load({xtype: "mailing-page-queue-list"}); });</script>');
+        $configJs = $this->modx->toJSON([
+            'xtype' => 'mailing-page-queue-list',
+            'rateWaitTime' => intval($this->modx->getOption('mailing_rate_wait_time', [], 0)) * 1000,
+        ]);
+        $this->addHtml('<script type="text/javascript">Ext.onReady(function() { MODx.load(' . $configJs . '); });</script>');
     }
 }

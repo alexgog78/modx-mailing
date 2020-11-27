@@ -11,5 +11,5 @@ Mailing.page.log.list = function (config) {
     });
     Mailing.page.log.list.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.page.log.list, MODx.Component, {});
+Ext.extend(Mailing.page.log.list, Mailing.page, {});
 Ext.reg('mailing-page-log-list', Mailing.page.log.list);

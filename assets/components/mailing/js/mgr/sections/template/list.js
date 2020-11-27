@@ -11,5 +11,5 @@ Mailing.page.template.list = function (config) {
     });
     Mailing.page.template.list.superclass.constructor.call(this, config);
 };
-Ext.extend(Mailing.page.template.list, MODx.Component, {});
+Ext.extend(Mailing.page.template.list, Mailing.page, {});
 Ext.reg('mailing-page-template-list', Mailing.page.template.list);

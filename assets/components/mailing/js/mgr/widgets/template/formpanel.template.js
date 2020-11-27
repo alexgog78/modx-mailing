@@ -124,6 +124,7 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
         return {xtype: 'mailing-grid-template-user', template: record};
     },
 
+    //TODO
     getPropertiesGrid: function () {
         return {
             html: _('mailing_indevelopment'),

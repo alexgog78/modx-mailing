@@ -1,5 +1,6 @@
 'use strict';
 
+//TODO log window
 Mailing.grid.queue = function (config) {
     config = config || {};
     if (!config.id) {
@@ -105,7 +106,6 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
     processAll: function (btn, e) {
         Ext.Msg.confirm(_('mailing_queue_process_all'), _('mailing_queue_process_all_confirm'), function (e) {
             if (e == 'yes') {
-                console.log('processAll');
                 this._progressBar = Mailing.component.messageProgressBar();
                 Ext.Ajax.request({
                     scope: this,
@@ -120,18 +120,24 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
                         if (!data.success) {
                             return Ext.Msg.alert(_('error'), data.message);
                         }
-                        console.log(data);
                         if (!data.finish) {
                             opts.params.start += data.limit;
                             opts.params.queues_count = data.queues_count;
-                            this._progressBar.updateProgress(opts.params.start / data.total, 'Обработано: ' + opts.params.start + ' из: ' + data.total + '...');
-                            return Ext.Ajax.request(opts);
+                            this._progressBar.updateProgress(
+                                opts.params.start / data.total,
+                                _('mailing_progress', {count: opts.params.start, total: data.total})
+                            );
+                            return setTimeout(function () {
+                                Ext.Ajax.request(opts);
+                            }, this.config.rate_wait_time);
                         }
                         this._progressBar.hide();
+                        this.refresh();
                         Ext.Msg.alert(_('success'), data.message);
                     },
                     failure: function (response, opts) {
                         console.log('failure', response);
+                        this.refresh();
                         Ext.Msg.alert(_('error'), _('mailing_err_response', {
                             'status': response.status,
                             'text': response.statusText,

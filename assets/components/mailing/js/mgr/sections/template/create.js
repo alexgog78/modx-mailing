@@ -5,7 +5,6 @@ Ext.namespace('Mailing.page.template');
 Mailing.page.template.create = function (config) {
     config = config || {};
     Ext.applyIf(config, {
-        url: Mailing.config.connectorUrl,
         formpanel: 'mailing-formpanel-template',
         components: [{
             xtype: 'mailing-formpanel-template',

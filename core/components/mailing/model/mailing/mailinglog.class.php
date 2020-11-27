@@ -9,6 +9,9 @@ class mailingLog extends xPDOSimpleObject
     /** @var string|null */
     private $createdOnField = 'created_on';
 
+    /** @var string|null */
+    private $createdByField = 'created_by';
+
     /**
      * @param null $cacheFlag
      * @return bool
@@ -18,5 +21,4 @@ class mailingLog extends xPDOSimpleObject
         $this->setTimestamps();
         return parent::save($cacheFlag);
     }
-
 }

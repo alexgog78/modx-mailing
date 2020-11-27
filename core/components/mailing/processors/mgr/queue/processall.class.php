@@ -18,15 +18,11 @@ class mailingQueueProcessAllListProcessor extends mailingQueueGetListProcessor
     public function initialize()
     {
         $this->queuesCount = intval($this->getProperty('queues_count')) ?? 0;
+        $rateLimit = intval($this->modx->getOption('mailing_rate_limit'));
+        if ($rateLimit) {
+            $this->setProperty('limit', $rateLimit);
+        }
         return parent::initialize();
-    }
-
-    public function prepareQueryBeforeCount(xPDOQuery $c)
-    {
-        $c->where([
-            $this->classKey . '.status:!=' => $this->classKey::STATUS_SUCCESS,
-        ]);
-        return parent::prepareQueryBeforeCount($c);
     }
 
     /**
@@ -35,8 +31,10 @@ class mailingQueueProcessAllListProcessor extends mailingQueueGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        if ($object->process()) {
-            $this->queuesCount++;
+        if ($object->get('status') != $this->classKey::STATUS_SUCCESS) {
+            if ($object->process()) {
+                $this->queuesCount++;
+            }
         }
         return parent::prepareRow($object);
     }

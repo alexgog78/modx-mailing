@@ -45,7 +45,7 @@ class mailingLogGetListProcessor extends modObjectGetListProcessor
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
-        $c->select($this->modx->getSelectColumns('mailingTemplate', 'Template', 'template_', ['name']));
+        $c->select($this->modx->getSelectColumns('mailingTemplate', 'Template', 'template_', ['id', 'name']));
         $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt',], true));
         $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email', 'blocked',]));
         return parent::prepareQueryAfterCount($c);

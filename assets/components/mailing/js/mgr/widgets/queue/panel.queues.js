@@ -10,7 +10,7 @@ Mailing.panel.queues = function (config) {
             this.getHeader(_('mailing_queue_list')),
             this.getMainPartPlain([
                 this.getDescription(_('mailing_queue_list_management')),
-                this.getContent({xtype: 'mailing-grid-queue'}),
+                this.getContent({xtype: 'mailing-grid-queue', rate_wait_time: config.rate_wait_time}),
             ])
         ],
     });
