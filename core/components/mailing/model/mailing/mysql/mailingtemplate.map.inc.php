@@ -111,6 +111,15 @@ $xpdo_meta_map['mailingTemplate'] = [
             ],
         ],
     ],
+    'composites' => [
+        'Queues' => [
+            'class' => 'mailingQueue',
+            'local' => 'id',
+            'foreign' => 'template_id',
+            'cardinality' => 'many',
+            'owner' => 'local',
+        ],
+    ],
     'aggregates' => [
         'UserGroup' => [
             'class' => 'modUserGroup',

@@ -40,12 +40,12 @@ Ext.extend(Mailing.page.template.create, MODx.Component, {
     getCloseButton: function (config) {
         return {
             text: _('close'),
-            handler: this._close,
+            handler: this.close,
             scope: this
         };
     },
 
-    _close: function () {
+    close: function () {
         MODx.loadPage('mgr/templates', 'namespace=mailing')
     }
 });

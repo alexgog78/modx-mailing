@@ -4,13 +4,8 @@ Mailing.formPanel.template = function (config) {
     config = config || {};
     Ext.applyIf(config, {
         id: 'mailing-formpanel-template',
-        listeners: {
-            'setup': {fn: this.setup, scope: this},
-            'success': {fn: this.success, scope: this},
-            'beforeSubmit': {fn: this.beforeSubmit, scope: this}
-        },
         items: [
-            this.getHeader(_('mailing_template')),
+            this.getHeader((config.record ? _('mailing_template_editing') : _('mailing_template_creating')), {id: 'mailing-formpanel-template-header'}),
             this.getMainPartTabs([{
                 title: _('mailing_template_settings'),
                 items: [
@@ -50,11 +45,18 @@ Mailing.formPanel.template = function (config) {
     Mailing.formPanel.template.superclass.constructor.call(this, config);
 };
 Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
+    setup: function () {
+        if (this.record) {
+            Ext.getCmp('mailing-formpanel-template-header').html = _('mailing_template_editing', {name: this.record.name});
+        }
+        return Mailing.formPanel.template.superclass.setup.call(this);
+    },
+
     success: function (o) {
         if (!this.record) {
             MODx.loadPage('mgr/template/update', 'namespace=mailing&id=' + o.result.object.id);
         }
-        return Mailing.formPanel.superclass.success.call(this, o);
+        return Mailing.formPanel.template.superclass.success.call(this, o);
     },
 
     getMainForm: function (config) {
@@ -68,19 +70,19 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
                     layout: 'form',
                     defaults: {msgTarget: 'under', border: false, anchor: '100%'},
                     items: [
-                        this.getFormInput('name', {fieldLabel: _('mailing_record_name')}),
+                        this.getFormInput('name', {fieldLabel: _('mailing_template_name')}),
                         this.getFormInput('user_group_id', {
                             xtype: 'mailing-combo-usergroup',
-                            fieldLabel: _('mailing_record_user_group'),
+                            fieldLabel: _('mailing_template_user_group'),
                             listeners: {
                                 'change': {
                                     fn: this.updateUsersGrid, scope: this
                                 }
                             }
                         }),
-                        this.getFormInput('email_from', {fieldLabel: _('mailing_record_email_from')}),
-                        this.getFormInput('email_from_name', {fieldLabel: _('mailing_record_email_from_name')}),
-                        this.getFormInput('email_subject', {fieldLabel: _('mailing_record_email_subject')}),
+                        this.getFormInput('email_from', {fieldLabel: _('mailing_template_email_from')}),
+                        this.getFormInput('email_from_name', {fieldLabel: _('mailing_template_email_from_name')}),
+                        this.getFormInput('email_subject', {fieldLabel: _('mailing_template_email_subject')}),
                     ]
                 }, {
                     columnWidth: .5,
@@ -89,7 +91,7 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
                     items: [
                         this.getFormInput('description', {
                             xtype: 'textarea',
-                            fieldLabel: _('mailing_record_description'),
+                            fieldLabel: _('mailing_template_description'),
                             height: 308
                         }),
                     ]
@@ -103,7 +105,7 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
         return this.getFormInput('content', {
             xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
             mimeType: 'text/html',
-            fieldLabel: _('mailing_record_content'),
+            fieldLabel: _('mailing_template_content_html'),
             height: 400,
         });
     },
@@ -159,10 +161,10 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
                     layout: 'form',
                     defaults: {msgTarget: 'under', border: false, anchor: '100%'},
                     items: [
-                        this.getFormInput('created_on', {fieldLabel: _('mailing_record_createdon'), readOnly: true}),
+                        this.getFormInput('created_on', {fieldLabel: _('mailing_template_createdon'), readOnly: true}),
                         this.getFormInput('created_by', {
                             xtype: 'modx-combo-user',
-                            fieldLabel: _('mailing_record_createdby'),
+                            fieldLabel: _('mailing_template_createdby'),
                             readOnly: true
                         }),
                     ]
@@ -171,10 +173,10 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
                     layout: 'form',
                     defaults: {msgTarget: 'under', border: false, anchor: '100%'},
                     items: [
-                        this.getFormInput('updated_on', {fieldLabel: _('mailing_record_updatedon'), readOnly: true}),
+                        this.getFormInput('updated_on', {fieldLabel: _('mailing_template_updatedon'), readOnly: true}),
                         this.getFormInput('updated_by', {
                             xtype: 'modx-combo-user',
-                            fieldLabel: _('mailing_record_updatedby'),
+                            fieldLabel: _('mailing_template_updatedby'),
                             readOnly: true
                         }),
                     ]

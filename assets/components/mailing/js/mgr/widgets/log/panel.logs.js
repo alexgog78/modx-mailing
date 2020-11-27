@@ -7,9 +7,9 @@ Mailing.panel.logs = function (config) {
     }
     Ext.applyIf(config, {
         items: [
-            this.getHeader(_('mailing_logs')),
+            this.getHeader(_('mailing_log_list')),
             this.getMainPartPlain([
-                this.getDescription(_('mailing_logs_management')),
+                this.getDescription(_('mailing_log_list_management')),
                 this.getContent({xtype: 'mailing-grid-log'}),
             ])
         ],

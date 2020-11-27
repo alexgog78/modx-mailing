@@ -18,9 +18,9 @@ Mailing.grid.template = function (config) {
         ],
         columns: [
             this.getGridColumn('id', {header: _('id'), width: 0.05}),
-            this.getGridColumn('name', {header: _('mailing_record_name'), width: 0.4, editor: {xtype: 'textfield'}}),
-            this.getGridColumn('user_group_name', {header: _('mailing_record_user_group'), width: 0.4}),
-            this.getGridColumn('users_count', {header: _('mailing_record_users_count'), width: 0.2}),
+            this.getGridColumn('name', {header: _('mailing_template_name'), width: 0.4, editor: {xtype: 'textfield'}}),
+            this.getGridColumn('user_group_name', {header: _('mailing_template_user_group'), width: 0.4}),
+            this.getGridColumn('users_count', {header: _('mailing_user_count'), width: 0.2}),
         ],
     });
     Mailing.grid.template.superclass.constructor.call(this, config);

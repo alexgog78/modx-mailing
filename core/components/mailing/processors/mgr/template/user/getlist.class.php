@@ -5,10 +5,10 @@ require_once MODX_CORE_PATH . 'model/modx/processors/security/user/getlist.class
 class mailingTemplateUserGetListProcessor extends modUserGetListProcessor
 {
     /** @var string */
-    public $defaultSortField = 'id';
+    public $objectType = 'mailing';
 
     /** @var string */
-    public $objectType = 'mailing';
+    public $defaultSortField = 'id';
 
     /** @var mailingTemplate */
     protected $mailingTemplate;

@@ -4,6 +4,12 @@ require_once dirname(__DIR__) . '/manager.class.php';
 
 class mailingMgrTemplateCreateManagerController extends mailingManagerController
 {
+    /** @var array */
+    protected $languageTopics = [
+        'mailing:template',
+        'mailing:user',
+    ];
+
     /** @var string */
     protected $objectClassKey = 'mailingTemplate';
 
@@ -23,9 +29,7 @@ class mailingMgrTemplateCreateManagerController extends mailingManagerController
      */
     public function getPageTitle()
     {
-        return $this->getLexiconTopic('creating', [
-                'record' => $this->getLexiconTopic('template'),
-            ]) . parent::getPageTitle();
+        return $this->getLexiconTopic('template_creating') . parent::getPageTitle();
     }
 
     public function loadCustomCssJs()

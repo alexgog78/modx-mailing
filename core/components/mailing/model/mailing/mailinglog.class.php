@@ -6,9 +6,6 @@ class mailingLog extends xPDOSimpleObject
 {
     use mailingModelTimestamps;
 
-    const STATUS_ERROR = 1;
-    const STATUS_SUCCESS = 2;
-
     /** @var string|null */
     private $createdOnField = 'created_on';
 
@@ -21,4 +18,5 @@ class mailingLog extends xPDOSimpleObject
         $this->setTimestamps();
         return parent::save($cacheFlag);
     }
+
 }

@@ -2,21 +2,18 @@
 
 require_once dirname(__DIR__) . '/helpers/search.trait.php';
 
-class mailingLogGetListProcessor extends modObjectGetListProcessor
+class mailingQueueGetListProcessor extends modObjectGetListProcessor
 {
     use mailingProcessorSearch;
 
     /** @var string */
-    public $classKey = 'mailingLog';
+    public $classKey = 'mailingQueue';
 
     /** @var string */
     public $objectType = 'mailing';
 
     /** @var string */
-    public $defaultSortField = 'created_on';
-
-    /** @var string */
-    public $defaultSortDirection = 'DESC';
+    public $defaultSortField = 'id';
 
     /** @var array */
     private $searchableFields = [
@@ -30,9 +27,8 @@ class mailingLogGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $c->leftJoin('mailingQueue', 'Queue');
-        $c->leftJoin('mailingTemplate', 'Template', 'Template.id = Queue.template_id');
-        $c->leftJoin('modUser', 'User', 'User.id = Queue.user_id');
+        $c->leftJoin('mailingTemplate', 'Template');
+        $c->leftJoin('modUser', 'User');
         $c->leftJoin('modUserProfile', 'Profile', 'User.id = Profile.internalKey');
         $this->searchQuery($c);
         return parent::prepareQueryBeforeCount($c);
@@ -47,9 +43,19 @@ class mailingLogGetListProcessor extends modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
         $c->select($this->modx->getSelectColumns('mailingTemplate', 'Template', 'template_', ['name']));
         $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt',], true));
-        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email', 'blocked',]));
+        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email', 'blocked']));
         return parent::prepareQueryAfterCount($c);
+    }
+
+    /**
+     * @param xPDOObject $object
+     * @return array
+     */
+    public function prepareRow(xPDOObject $object)
+    {
+        //$object->set('log_status', $object->get('log_status') ?? 0);
+        return parent::prepareRow($object);
     }
 }
 
-return 'mailingLogGetListProcessor';
+return 'mailingQueueGetListProcessor';

@@ -23,9 +23,9 @@ Ext.extend(Mailing.formPanel, MODx.FormPanel, {
         } else {
             this.setValues(this.record);
         }
-        console.log(this.record);
         this.fireEvent('ready', this.record);
         MODx.fireEvent('ready');
+        this.initialized = true;
     },
 
     beforeSubmit: function (o) {
@@ -41,20 +41,20 @@ Ext.extend(Mailing.formPanel, MODx.FormPanel, {
         this.getForm().setValues(record);
     },
 
-    getHeader: function (text) {
-        return {
+    getHeader: function (text, config = {}) {
+        return Ext.applyIf(config, {
             xtype: 'modx-header',
-            itemId: '',
+            //itemId: 'xxx',
             html: text
-        };
+        });
     },
 
-    getDescription: function (text) {
-        return {
+    getDescription: function (text, config = {}) {
+        return Ext.applyIf(config, {
             xtype: 'modx-description',
             itemId: '',
             html: '<p>' + text + '</p>'
-        };
+        });
     },
 
     getMainPartTabs: function (items = []) {

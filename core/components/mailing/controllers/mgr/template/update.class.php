@@ -4,6 +4,12 @@ require_once dirname(__DIR__) . '/manager.class.php';
 
 class mailingMgrTemplateUpdateManagerController extends mailingManagerController
 {
+    /** @var array */
+    protected $languageTopics = [
+        'mailing:template',
+        'mailing:user',
+    ];
+
     /** @var string */
     protected $objectGetProcessorPath = 'mgr/template/get';
 
@@ -26,9 +32,7 @@ class mailingMgrTemplateUpdateManagerController extends mailingManagerController
      */
     public function getPageTitle()
     {
-        return $this->getLexiconTopic('editing', [
-                'record' => $this->getLexiconTopic('template'),
-            ]) . parent::getPageTitle();
+        return $this->getLexiconTopic('template_editing', ['name' => $this->object['name']]) . parent::getPageTitle();
     }
 
     public function loadCustomCssJs()

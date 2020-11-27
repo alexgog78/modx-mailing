@@ -4,12 +4,18 @@ require_once __DIR__ . '/manager.class.php';
 
 class mailingMgrLogsManagerController extends mailingManagerController
 {
+    /** @var array */
+    protected $languageTopics = [
+        'mailing:log',
+        'mailing:user',
+    ];
+
     /**
      * @return string
      */
     public function getPageTitle()
     {
-        return $this->getLexiconTopic('logs') . parent::getPageTitle();
+        return $this->getLexiconTopic('log_list') . parent::getPageTitle();
     }
 
     public function loadCustomCssJs()

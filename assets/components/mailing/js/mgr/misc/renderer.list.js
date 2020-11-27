@@ -49,5 +49,25 @@ Mailing.renderer = {
             id,
             value
         );
-    }
+    },
+
+    status: function (value, cell, row) {
+        switch (value) {
+            case 0:
+            case '0':
+            case false:
+                cell.css = 'blue';
+                break;
+            case 1:
+            case '1':
+            case true:
+                cell.css = 'green';
+                break;
+            case 2:
+            case '2':
+                cell.css = 'red';
+                break;
+        }
+        return _('mailing_status_' + value);
+    },
 };

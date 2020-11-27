@@ -13,7 +13,7 @@ $service = $modx->getService('mailing', 'Mailing', MODX_CORE_PATH . 'components/
 $modx->lexicon->load('mailing:default', 'mailing:status');
 
 /** @var MailingTemplate $template */
-$template = $modx->getObject('MailingTemplate', [
+$template = $modx->getObject('mailingTemplate', [
     'id' => $_REQUEST['template'],
 ]);
 if (!$template) {

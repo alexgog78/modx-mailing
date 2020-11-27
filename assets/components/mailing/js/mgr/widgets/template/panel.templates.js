@@ -7,9 +7,9 @@ Mailing.panel.templates = function (config) {
     }
     Ext.applyIf(config, {
         items: [
-            this.getHeader(_('mailing_templates')),
+            this.getHeader(_('mailing_template_list')),
             this.getMainPartPlain([
-                this.getDescription(_('mailing_templates_management')),
+                this.getDescription(_('mailing_template_list_management')),
                 this.getContent({xtype: 'mailing-grid-template'}),
             ])
         ],

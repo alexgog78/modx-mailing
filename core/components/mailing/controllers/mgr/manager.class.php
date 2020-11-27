@@ -9,12 +9,7 @@ abstract class mailingManagerController extends modExtraManagerController
     protected $assetsVersion;
 
     /** @var array */
-    protected $languageTopics = [
-        'default',
-        'manager',
-        'record',
-        'status',
-    ];
+    protected $languageTopics = [];
 
     /**
      * @param $name
@@ -38,10 +33,10 @@ abstract class mailingManagerController extends modExtraManagerController
      * @return array
      */
     public function getLanguageTopics() {
-        array_walk($this->languageTopics, function (&$item) {
-            $item = $this->namespace . ':' . $item;
-        });
-        return $this->languageTopics;
+        return array_merge($this->languageTopics, [
+            'mailing:default',
+            'mailing:status',
+        ]);
     }
 
     /**
@@ -59,6 +54,7 @@ abstract class mailingManagerController extends modExtraManagerController
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/panel.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/formpanel.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/grid.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/misc/component.list.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/renderer.list.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/combo/select.usergroup.js');
         $configJs = $this->modx->toJSON($this->service->config ?? []);

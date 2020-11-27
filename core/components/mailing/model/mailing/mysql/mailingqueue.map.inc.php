@@ -1,22 +1,31 @@
 <?php
 
-$xpdo_meta_map['mailingLog'] = [
+$xpdo_meta_map['mailingQueue'] = [
     'package' => 'mailing',
     'version' => '1.1',
-    'table' => 'logs',
+    'table' => 'queues',
     'extends' => 'xPDOSimpleObject',
     'tableMeta' => [
         'engine' => 'InnoDB',
     ],
     'fields' => [
-        'queue_id' => NULL,
+        'template_id' => NULL,
+        'user_id' => NULL,
         'status' => 0,
         'created_on' => NULL,
         'created_by' => 0,
-        'properties' => NULL,
+        'updated_on' => NULL,
+        'updated_by' => 0,
     ],
     'fieldMeta' => [
-        'queue_id' => [
+        'template_id' => [
+            'dbtype' => 'int',
+            'precision' => '10',
+            'attributes' => 'unsigned',
+            'phptype' => 'integer',
+            'null' => false,
+        ],
+        'user_id' => [
             'dbtype' => 'int',
             'precision' => '10',
             'attributes' => 'unsigned',
@@ -35,7 +44,6 @@ $xpdo_meta_map['mailingLog'] = [
             'dbtype' => 'datetime',
             'phptype' => 'datetime',
             'null' => true,
-            'default' => NULL,
         ],
         'created_by' => [
             'dbtype' => 'int',
@@ -45,20 +53,33 @@ $xpdo_meta_map['mailingLog'] = [
             'null' => false,
             'default' => 0,
         ],
-        'properties' => [
-            'dbtype' => 'text',
-            'phptype' => 'json',
+        'updated_on' => [
+            'dbtype' => 'datetime',
+            'phptype' => 'datetime',
             'null' => true,
+        ],
+        'updated_by' => [
+            'dbtype' => 'int',
+            'precision' => '10',
+            'attributes' => 'unsigned',
+            'phptype' => 'integer',
+            'null' => false,
+            'default' => 0,
         ],
     ],
     'indexes' => [
-        'queue_id' => [
-            'alias' => 'queue_id',
+        'queue' => [
+            'alias' => 'queue',
             'primary' => false,
-            'unique' => false,
+            'unique' => true,
             'type' => 'BTREE',
             'columns' => [
-                'queue_id' => [
+                'template_id' => [
+                    'length' => '',
+                    'collation' => 'A',
+                    'null' => false,
+                ],
+                'user_id' => [
                     'length' => '',
                     'collation' => 'A',
                     'null' => false,
@@ -79,10 +100,26 @@ $xpdo_meta_map['mailingLog'] = [
             ],
         ],
     ],
+    'composites' => [
+        'Logs' => [
+            'class' => 'mailingLog',
+            'local' => 'id',
+            'foreign' => 'queue_id',
+            'cardinality' => 'many',
+            'owner' => 'local',
+        ],
+    ],
     'aggregates' => [
-        'Queue' => [
-            'class' => 'mailingQueue',
-            'local' => 'queue_id',
+        'Template' => [
+            'class' => 'mailingTemplate',
+            'local' => 'template_id',
+            'foreign' => 'id',
+            'cardinality' => 'one',
+            'owner' => 'foreign',
+        ],
+        'User' => [
+            'class' => 'modUser',
+            'local' => 'user_id',
             'foreign' => 'id',
             'cardinality' => 'one',
             'owner' => 'foreign',
