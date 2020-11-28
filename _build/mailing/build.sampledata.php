@@ -11,15 +11,16 @@ $modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget('ECHO');
 $modx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
+/** $service Mailing */
 $service = $modx->getService(PKG_NAME_LOWER, PKG_NAME, PKG_MODEL_PATH . PKG_NAME_LOWER . '/');
 
 define('SAMPLEDATA_USERS_COUNT', 100);
 define('SAMPLEDATA_USER_GROUPS_COUNT', 1);
 define('SAMPLEDATA_MAIL_TEMPLATES_COUNT', 1);
 
-$userGroups = include 'data/sampledata.usergoups.php';
-$mailingTemplates = include 'data/sampledata.mailingtemplates.php';
-$users = include 'data/sampledata.users.php';
+$userGroups = include __DIR__ . '/data/sampledata.usergoups.php';
+$mailingTemplates = include __DIR__ . '/data/sampledata.mailingtemplates.php';
+$users = include __DIR__ . '/data/sampledata.users.php';
 
 
 /**

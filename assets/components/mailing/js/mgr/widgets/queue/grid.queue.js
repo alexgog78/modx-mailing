@@ -175,6 +175,7 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
     },
 
     removeSuccessRecords: function (btn, e) {
+        this.loadMask.show();
         MODx.msg.confirm({
             title: _('delete'),
             text: _('confirm_remove'),
@@ -190,6 +191,7 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
     },
 
     removeAllRecords: function (btn, e) {
+        this.loadMask.show();
         MODx.msg.confirm({
             title: _('delete'),
             text: _('confirm_remove'),

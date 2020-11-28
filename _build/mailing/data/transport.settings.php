@@ -3,11 +3,11 @@
 return [
     [
         'key' => 'mailing_email_css',
-        'value' => '[[+cssPath]]mail/default.css',
+        'value' => 'components/mailing/css/mail/default.css',
     ],
     [
         'key' => 'mailing_email_template',
-        'value' => '[[+templatesPath]]mail.tpl',
+        'value' => 'components/mailing/elements/templates/mail.tpl',
     ],
     [
         'key' => 'mailing_rate_limit',
