@@ -34,6 +34,12 @@ class mailingLogGetListProcessor extends modObjectGetListProcessor
         $c->leftJoin('mailingTemplate', 'Template', 'Template.id = Queue.template_id');
         $c->leftJoin('modUser', 'User', 'User.id = Queue.user_id');
         $c->leftJoin('modUserProfile', 'Profile', 'User.id = Profile.internalKey');
+        $queueId = $this->getProperty('queue_id');
+        if ($queueId) {
+            $c->where([
+                'queue_id' => $queueId,
+            ]);
+        }
         $this->searchQuery($c);
         return parent::prepareQueryBeforeCount($c);
     }
@@ -46,8 +52,8 @@ class mailingLogGetListProcessor extends modObjectGetListProcessor
     {
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
         $c->select($this->modx->getSelectColumns('mailingTemplate', 'Template', 'template_', ['id', 'name']));
-        $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt',], true));
-        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email', 'blocked',]));
+        $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt', 'remote_key', 'remote_data', 'sessionid'], true));
+        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email']));
         return parent::prepareQueryAfterCount($c);
     }
 }

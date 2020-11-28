@@ -5,14 +5,14 @@ require_once __DIR__ . '/getlist.class.php';
 class mailingTemplateUserExportProcessor extends mailingTemplateUserGetListProcessor
 {
     /** @var int */
-    private $queuesCount;
+    private $userCount;
 
     /**
      * @return bool|string|null
      */
     public function initialize()
     {
-        $this->queuesCount = intval($this->getProperty('queues_count')) ?? 0;
+        $this->userCount = intval($this->getProperty('user_count')) ?? 0;
         return parent::initialize();
     }
 
@@ -36,7 +36,7 @@ class mailingTemplateUserExportProcessor extends mailingTemplateUserGetListProce
         $queue = $this->modx->newObject('mailingQueue');
         $queue->fromArray($queueData);
         if ($queue->save()) {
-            $this->queuesCount++;
+            $this->userCount++;
         }
 
         return parent::prepareRow($object);
@@ -54,11 +54,11 @@ class mailingTemplateUserExportProcessor extends mailingTemplateUserGetListProce
 
         $output['start'] = intval($this->getProperty('start'));
         $output['limit'] = intval($this->getProperty('limit'));
-        $output['queues_count'] = intval($this->queuesCount);
+        $output['user_count'] = intval($this->userCount);
         if ($output['start'] + $output['limit'] >= $count) {
             $output['finish'] = true;
             $output['message'] = $this->modx->lexicon($this->objectType . '_scs_queue', [
-                'count' => $this->queuesCount,
+                'count' => $this->userCount,
             ]);
         }
         return $this->modx->toJSON($output);

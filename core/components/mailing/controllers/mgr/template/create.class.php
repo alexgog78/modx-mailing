@@ -37,6 +37,8 @@ class mailingMgrTemplateCreateManagerController extends mailingManagerController
         parent::loadCustomCssJs();
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/formpanel.template.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/grid.user.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/grid.property.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/widgets/template/window.property.js');
         $this->addLastJavascript($this->service->jsUrl . 'mgr/sections/template/create.js');
         $configJs = $this->modx->toJSON([
             'xtype' => 'mailing-page-template-create',

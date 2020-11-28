@@ -1,6 +1,5 @@
 'use strict';
 
-//TODO log window
 Mailing.grid.queue = function (config) {
     config = config || {};
     if (!config.id) {
@@ -31,6 +30,7 @@ Mailing.grid.queue = function (config) {
     Mailing.grid.queue.superclass.constructor.call(this, config);
 };
 Ext.extend(Mailing.grid.queue, Mailing.grid, {
+    _recordWindow: null,
     _progressBar: null,
 
     getToolbar: function () {
@@ -45,6 +45,10 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
 
     getMenu: function () {
         return [{
+            text: _('view'),
+            handler: this.viewRecord,
+            scope: this
+        }, {
             text: _('mailing_queue_process'),
             handler: this.processRecord,
             scope: this
@@ -76,6 +80,24 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
             handler: this.removeAllRecords,
             scope: this
         });
+    },
+
+    viewRecord: function (btn, e) {
+        if (this._recordWindow) {
+            this._recordWindow.close();
+        }
+        this._recordWindow = new MODx.load({
+            xtype: 'mailing-window-queue',
+            title: _('view'),
+            record: this.menu.record,
+            listeners: {
+                success: {
+                    fn: this.refresh,
+                    scope: this
+                }
+            }
+        });
+        this._recordWindow.show(e.target);
     },
 
     processRecord: function (btn, e) {
@@ -113,7 +135,8 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
                     params: {
                         action: 'mgr/queue/processall',
                         start: 0,
-                        queues_count: 0,
+                        success_count: 0,
+                        error_count: 0,
                     },
                     success: function (response, opts) {
                         let data = Ext.decode(response.responseText);
@@ -122,7 +145,8 @@ Ext.extend(Mailing.grid.queue, Mailing.grid, {
                         }
                         if (!data.finish) {
                             opts.params.start += data.limit;
-                            opts.params.queues_count = data.queues_count;
+                            opts.params.success_count = data.success_count;
+                            opts.params.error_count = data.error_count;
                             this._progressBar.updateProgress(
                                 opts.params.start / data.total,
                                 _('mailing_progress', {count: opts.params.start, total: data.total})

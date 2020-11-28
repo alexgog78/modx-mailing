@@ -23,6 +23,10 @@ Ext.extend(Mailing.grid, MODx.grid.Grid, {
         Mailing.grid.superclass.initComponent.call(this);
     },
 
+    getRowClass: function (record) {
+        return '';
+    },
+
     getGridColumn: function (name, config = {}) {
         return Ext.applyIf(config, {
             dataIndex: name,

@@ -71,6 +71,10 @@ foreach ($oldMailingTemplates as $mailingTemplate) {
 }
 $query = 'ALTER TABLE ' . $modx->getTableName('mailingTemplate') . ' AUTO_INCREMENT = 1;';
 $modx->query($query);
+$query = 'ALTER TABLE ' . $modx->getTableName('mailingQueue') . ' AUTO_INCREMENT = 1;';
+$modx->query($query);
+$query = 'ALTER TABLE ' . $modx->getTableName('mailingLog') . ' AUTO_INCREMENT = 1;';
+$modx->query($query);
 $modx->log(modX::LOG_LEVEL_INFO, 'Old test mail templates removed');
 
 

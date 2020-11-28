@@ -42,8 +42,8 @@ class mailingQueueGetListProcessor extends modObjectGetListProcessor
     {
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
         $c->select($this->modx->getSelectColumns('mailingTemplate', 'Template', 'template_', ['name']));
-        $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt',], true));
-        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email', 'blocked']));
+        $c->select($this->modx->getSelectColumns('modUser', 'User', 'user_', ['password', 'cachepwd', 'salt', 'remote_key', 'remote_data', 'sessionid'], true));
+        $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', 'user_', ['fullname', 'email']));
         return parent::prepareQueryAfterCount($c);
     }
 

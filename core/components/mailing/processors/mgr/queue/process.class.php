@@ -9,6 +9,9 @@ class mailingQueueProcessProcessor extends mailingQueueGetProcessor
      */
     public function process()
     {
+        if ($this->object->get('status') == $this->classKey::STATUS_SUCCESS) {
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_mailing_duplicate'));
+        }
         if (!$this->object->process()) {
             return $this->failure($this->modx->lexicon($this->objectType . '_err_save'));
         }
@@ -20,7 +23,10 @@ class mailingQueueProcessProcessor extends mailingQueueGetProcessor
      */
     public function cleanup()
     {
-        return $this->success($this->modx->lexicon($this->objectType . '_scs_mailing', ['count' => 1]), $this->object->toArray());
+        return $this->success($this->modx->lexicon($this->objectType . '_scs_mailing', [
+            'count' => 1,
+            'errors' => 0,
+        ]), $this->object->toArray());
     }
 }
 

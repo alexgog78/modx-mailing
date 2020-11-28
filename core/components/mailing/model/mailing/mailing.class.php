@@ -1,10 +1,12 @@
 <?php
 
 require_once dirname(dirname(__DIR__)) . '/helpers/log.trait.php';
+require_once dirname(dirname(__DIR__)) . '/helpers/event.trait.php';
 
 class Mailing
 {
     use mailingLogHelper;
+    use mailingEventHelper;
 
     const PKG_VERSION = '1.0.0';
     const PKG_RELEASE = 'beta';
@@ -16,6 +18,9 @@ class Mailing
 
     /** @var array */
     public $config = [];
+
+    /** @var mailingMailer */
+    private $mailer;
 
     /**
      * Mailing constructor.
@@ -29,6 +34,7 @@ class Mailing
         $this->config = $this->getConfig($config);
         $this->modx->addPackage(self::PKG_NAMESPACE, $this->modelPath, self::TABLE_PREFIX);
         $this->modx->lexicon->load(self::PKG_NAMESPACE . ':default');
+        $this->mailer = $this->modx->getService('mailingMailer', 'mailingMailer');
     }
 
     /**
@@ -41,6 +47,11 @@ class Mailing
             return $this->config[$name];
         }
         return null;
+    }
+
+    public function getMailer()
+    {
+        return $this->mailer;
     }
 
     /**

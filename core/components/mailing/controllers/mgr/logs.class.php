@@ -23,6 +23,7 @@ class mailingMgrLogsManagerController extends mailingManagerController
         parent::loadCustomCssJs();
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/log/panel.logs.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/widgets/log/grid.log.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/widgets/log/window.log.js');
         $this->addLastJavascript($this->service->jsUrl . 'mgr/sections/log/list.js');
         $configJs = $this->modx->toJSON([
             'xtype' => 'mailing-page-log-list',

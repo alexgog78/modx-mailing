@@ -12,7 +12,7 @@ $_lang[$prefix . 'scs_create'] = 'Запись успешно создана';
 $_lang[$prefix . 'scs_update'] = 'Данные успешно обновлены';
 $_lang[$prefix . 'scs_delete'] = 'Данные успешно удалены';
 $_lang[$prefix . 'scs_queue'] = 'Пользователи (<b>[[+count]]</b>) добавлены в очередь рассылки';
-$_lang[$prefix . 'scs_mailing'] = 'Рассылка успешно завершена.<br>Отправлено (<b>[[+count]]</b>) писем';
+$_lang[$prefix . 'scs_mailing'] = 'Рассылка успешно завершена.<br>Отправлено <b>[[+count]]</b> писем<br>Ошибок <b>[[+errors]]</b>';
 
 $_lang[$prefix . 'err_nfs'] = 'Запись "[[+id]]" не найдена';
 $_lang[$prefix . 'err_ae'] = 'Такая запись уже есть';
@@ -28,3 +28,4 @@ $_lang[$prefix . 'err_update'] = 'Ошибка обновления данных
 $_lang[$prefix . 'err_delete'] = 'Ошибка удаления данных';
 $_lang[$prefix . 'err_data'] = 'Проверьте введенные данные';
 $_lang[$prefix . 'err_mailing'] = 'Произошла ошибка при рассылке';
+$_lang[$prefix . 'err_mailing_duplicate'] = 'Данное письмо уже было отправленно';

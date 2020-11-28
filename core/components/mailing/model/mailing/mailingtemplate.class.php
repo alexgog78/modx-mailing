@@ -34,10 +34,12 @@ class mailingTemplate extends xPDOSimpleObject
      */
     public function process($scriptProperties = [])
     {
-        $html = $this->content;
+        $html = $this->get('content');
         $this->xpdo->toPlaceholders($scriptProperties);
-        $properties = $this->xpdo->fromJson($this->properties);
-        $this->xpdo->toPlaceholders($properties);
+        $properties = $this->get('properties');
+        foreach ($properties as $property) {
+            $this->xpdo->setPlaceholder($property['key'], $property['value']);
+        }
         $css = $this->getEmailStyles();
         if ($css) {
             $this->xpdo->setPlaceholder('styles', '<style>' . $css . '</style>');

@@ -26,3 +26,5 @@ $_lang[$prefix . 'createdon'] = 'Дата создания';
 $_lang[$prefix . 'createdby'] = 'Создано';
 $_lang[$prefix . 'updatedon'] = 'Дата изменения';
 $_lang[$prefix . 'updatedby'] = 'Изменено';
+$_lang[$prefix . 'property_key'] = 'Ключ';
+$_lang[$prefix . 'property_value'] = 'Значение';

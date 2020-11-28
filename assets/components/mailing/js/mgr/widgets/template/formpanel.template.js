@@ -48,8 +48,18 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
     setup: function () {
         if (this.record) {
             Ext.getCmp('mailing-formpanel-template-header').html = _('mailing_template_editing', {name: this.record.name});
+            this.setPropertyGrid(this.record.properties);
         }
         return Mailing.formPanel.template.superclass.setup.call(this);
+    },
+
+    setPropertyGrid: function (data) {
+        let grid = Ext.getCmp('mailing-grid-template-property');
+        let store = grid.getStore();
+        store.removeAll();
+        Ext.each(data, function(item) {
+            store.add(new Ext.data.Record(item));
+        }, this);
     },
 
     success: function (o) {
@@ -57,6 +67,23 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
             MODx.loadPage('mgr/template/update', 'namespace=mailing&id=' + o.result.object.id);
         }
         return Mailing.formPanel.template.superclass.success.call(this, o);
+    },
+
+    beforeSubmit: function (o) {
+        let grid = Ext.getCmp('mailing-grid-template-property');
+        let store = grid.getStore();
+        let records = store.getRange();
+        let properties = [];
+        Ext.each(records, function(rec, idx, list) {
+            properties.push({
+                key: rec.get('key'),
+                value: rec.get('value'),
+            });
+        }, this);
+        Ext.apply(o.form.baseParams, {
+            properties: Ext.encode(properties)
+        });
+        return Mailing.formPanel.template.superclass.beforeSubmit.call(this, o);
     },
 
     getMainForm: function (config) {
@@ -73,7 +100,7 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
                         this.getFormInput('name', {fieldLabel: _('mailing_template_name')}),
                         this.getFormInput('user_group_id', {
                             xtype: 'mailing-combo-usergroup',
-                            fieldLabel: _('mailing_template_user_group'),
+                            fieldLabel: _('mailing_user_group'),
                             listeners: {
                                 'change': {
                                     fn: this.updateUsersGrid, scope: this
@@ -124,16 +151,8 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
         return {xtype: 'mailing-grid-template-user', template: record};
     },
 
-    //TODO
     getPropertiesGrid: function () {
-        return {
-            html: _('mailing_indevelopment'),
-            cls: 'panel-desc',
-            style: {
-                fontSize: '170%',
-                textAlign: 'center'
-            }
-        };
+        return {xtype: 'mailing-grid-template-property'};
     },
 
     updateUsersGrid: function (tf, newValue, oldValue) {
@@ -145,7 +164,6 @@ Ext.extend(Mailing.formPanel.template, Mailing.formPanel, {
         grid.getBottomToolbar().changePage(1);
     },
 
-    //TODO maybe remove
     getLogSection: function (record = []) {
         if (!record || record.length === 0) {
             return {};

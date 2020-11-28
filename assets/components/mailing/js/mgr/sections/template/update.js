@@ -82,7 +82,7 @@ Ext.extend(Mailing.page.template.update, MODx.Component, {
                 action: 'mgr/template/user/export',
                 template_id: this.config.record.id,
                 start: 0,
-                queues_count: 0,
+                user_count: 0,
             },
             success: function (response, opts) {
                 let data = Ext.decode(response.responseText);
@@ -91,7 +91,7 @@ Ext.extend(Mailing.page.template.update, MODx.Component, {
                 }
                 if (!data.finish) {
                     opts.params.start += data.limit;
-                    opts.params.queues_count = data.queues_count;
+                    opts.params.user_count = data.user_count;
                     this._progressBar.updateProgress(
                         opts.params.start / data.total,
                         _('mailing_progress', {count: opts.params.start, total: data.total})

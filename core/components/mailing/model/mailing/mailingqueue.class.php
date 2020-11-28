@@ -21,6 +21,9 @@ class mailingQueue extends xPDOSimpleObject
     /** @var string|null */
     private $updatedByField = 'updated_by';
 
+    /** @var Mailing */
+    private $service;
+
     /** @var mailingMailer */
     private $mailer;
 
@@ -35,7 +38,8 @@ class mailingQueue extends xPDOSimpleObject
     public function __construct(xPDO &$xpdo)
     {
         parent::__construct($xpdo);
-        $this->mailer = $this->xpdo->getService('mailingMailer', 'mailingMailer');
+        $this->service = $this->xpdo->getService('Mailing', 'Mailing');
+        $this->mailer = $this->service->getMailer();
     }
 
     /**
@@ -56,7 +60,7 @@ class mailingQueue extends xPDOSimpleObject
         $this->log = $this->addLog();
         $emailStatus = $this->sendEmail();
         $this->addMany($this->log, 'Logs');
-        if (!$emailStatus || !$this->save()) {
+        if (!$this->save() || !$emailStatus) {
             return false;
         }
         return true;
@@ -84,28 +88,35 @@ class mailingQueue extends xPDOSimpleObject
         $profile = $user->getOne('Profile');
         $template = $this->getOne('Template');
 
-        $emailTo = $profile->get('email');
-        $emailFrom = $template->get('email_from') ?? $this->xpdo->getOption('emailsender');
-        $emailFromName = $template->get('email_from_name') ?? $this->xpdo->getOption('site_name');
-        $emailSubject = $template->get('email_subject');
-        $emailBody = $template->process(['user' => array_merge(
+        $config = [
+            'emailTo' => $profile->get('email'),
+            'emailFrom' => $template->get('email_from') ?? $this->xpdo->getOption('emailsender'),
+            'emailFromName' => $template->get('email_from_name') ?? $this->xpdo->getOption('site_name'),
+            'emailSubject' => $template->get('email_subject'),
+        ];
+        $response = $this->service->invokeEvent('OnBeforeEmailSend', $config);
+        $config = array_merge($config, $response['returnedValues']);
+
+        $userData = array_merge(
             $user->toArray('', false, true),
             $profile->toArray('', false, true)
-        )]);
+        );
+        unset($userData['password'], $userData['cachepwd'], $userData['salt'], $userData['remote_key'], $userData['remote_data'], $userData['sessionid']);
+        $emailBody = $template->process(['user' => $userData]);
 
+        $this->mailer->set(modMail::MAIL_FROM, $config['emailFrom']);
+        $this->mailer->set(modMail::MAIL_FROM_NAME, $config['emailFromName']);
+        $this->mailer->set(modMail::MAIL_SENDER, $config['emailFrom']);
+        $this->mailer->set(modMail::MAIL_SUBJECT, $config['emailSubject']);
+        $this->mailer->address('reply-to', $config['emailFrom']);
+        $this->mailer->address('to', $config['emailTo']);
         $this->mailer->set(modMail::MAIL_BODY, $emailBody);
-        $this->mailer->set(modMail::MAIL_FROM, $emailFrom);
-        $this->mailer->set(modMail::MAIL_FROM_NAME, $emailFromName);
-        $this->mailer->set(modMail::MAIL_SENDER, $emailFrom);
-        $this->mailer->set(modMail::MAIL_SUBJECT, $emailSubject);
-        $this->mailer->address('reply-to', $emailFrom);
-        $this->mailer->address('to', $emailTo);
         $this->mailer->setHTML(true);
         if (!$this->mailer->send()) {
             $this->set('status', $this::STATUS_ERROR);
             $this->log->set('status', $this::STATUS_ERROR);
             $this->log->set('properties', [
-                $this->mail->mailer->ErrorInfo,
+                'error' => $this->mailer->mailer->ErrorInfo,
             ]);
             $this->mailer->reset();
             return false;

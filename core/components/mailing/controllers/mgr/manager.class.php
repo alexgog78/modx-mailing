@@ -55,6 +55,8 @@ abstract class mailingManagerController extends modExtraManagerController
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/panel.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/formpanel.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/grid.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/misc/localgrid.js');
+        $this->addJavascript($this->service->jsUrl . 'mgr/misc/window.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/component.list.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/misc/renderer.list.js');
         $this->addJavascript($this->service->jsUrl . 'mgr/combo/select.usergroup.js');
